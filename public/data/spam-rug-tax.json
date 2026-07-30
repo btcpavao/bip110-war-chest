@@ -2,15 +2,15 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.1",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T12:17:38.887568+00:00",
-  "chainTip": 960255,
+  "generatedAt": "2026-07-30T12:34:20.322820+00:00",
+  "chainTip": 960256,
   "sourceFreshness": {
-    "mempoolSpace": "2026-07-30T12:17:38.048678+00:00",
-    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
+    "bip110Monitor": "2026-07-30T12:24:56.791Z",
     "braiinsHashpower": null,
-    "coinGecko": "2026-07-30T12:17:38.887568+00:00"
+    "coinGecko": "2026-07-30T12:34:20.322820+00:00"
   },
-  "pipelineCommitSha": null,
+  "pipelineCommitSha": "89670eb482a5382011d61d1a0c92df4798129d2c",
   "warnings": [
     "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -26,10 +26,10 @@
   "auditedSignalingBlocks": 97,
   "totalSignalingBlocks": 97,
   "grossRejectedFeesSats": null,
-  "templateFeeGapSats": 35265057,
+  "templateFeeGapSats": 35259594,
   "estimatedNetFilterCostSats": null,
-  "unknownFeeMassSats": 35265057,
-  "averageMatchRatePct": 78.50525773195876,
+  "unknownFeeMassSats": 35259594,
+  "averageMatchRatePct": 78.50587628865979,
   "classificationCoveragePct": 0,
   "ruleBreakdown": [],
   "records": [],
