@@ -104,6 +104,14 @@
 .fabians-hero__visual .editorial-illustration__fallback {
   min-height: min(62vh, 650px);
 }
+.fabians-hero__visual .editorial-illustration__fallback strong {
+  display: block;
+  max-width: min(100%, 440px);
+  font-size: clamp(20px, 2.1vw, 28px);
+  line-height: .96;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
 .fabians-hero__visual figcaption {
   max-width: 720px;
   margin: 13px 6px 0;
