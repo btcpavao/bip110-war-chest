@@ -1,0 +1,94 @@
+name: Manual backfill
+
+on:
+  workflow_dispatch:
+    inputs:
+      startHeight:
+        description: Inclusive start height
+        required: true
+        default: "927360"
+      endHeight:
+        description: Inclusive end height or latest
+        required: true
+        default: "latest"
+      batchSize:
+        description: mempool.space blocks per batch
+        required: true
+        default: "15"
+      forceRefresh:
+        description: Ignore immutable API cache
+        type: boolean
+        default: false
+      auditOnly:
+        description: Rebuild Spam-Rug Tax only
+        type: boolean
+        default: false
+      priceOnly:
+        description: Rebuild BTC price records only
+        type: boolean
+        default: false
+      rentalMarketOnly:
+        description: Rebuild rental market records only
+        type: boolean
+        default: false
+
+concurrency:
+  group: bip110-manual-backfill
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/cache@v4
+        with:
+          path: .cache/mempool
+          key: manual-mempool-${{ runner.os }}-${{ hashFiles('config/ruleset.json') }}
+          restore-keys: |
+            manual-mempool-${{ runner.os }}-
+
+      - run: pip install -e ".[dev]"
+
+      - name: Run selected backfill
+        shell: bash
+        run: |
+          if [[ "${{ inputs.auditOnly }}" == "true" || "${{ inputs.priceOnly }}" == "true" || "${{ inputs.rentalMarketOnly }}" == "true" ]]; then
+            python scripts/generate_dashboard.py
+          else
+            args=(
+              --from-height "${{ inputs.startHeight }}"
+              --to-height "${{ inputs.endHeight }}"
+              --batch-size "${{ inputs.batchSize }}"
+            )
+            if [[ "${{ inputs.forceRefresh }}" == "true" ]]; then
+              args+=(--force-refresh)
+            fi
+            python scripts/backfill_signaling_blocks.py "${args[@]}"
+            python scripts/generate_dashboard.py
+          fi
+          python scripts/validate_data.py
+          pytest
+
+      - name: Commit generated data
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/block-headers.json data/signaling-blocks.json public/data
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "data: manual BIP-110 backfill [skip ci]"
+          git push

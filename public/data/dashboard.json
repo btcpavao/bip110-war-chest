@@ -1,0 +1,428 @@
+{
+  "schemaVersion": "1.0.0",
+  "methodologyVersion": "2026-07-30.1",
+  "rulesetVersion": "bip9-bit4-v1",
+  "generatedAt": "2026-07-30T12:17:38.887568+00:00",
+  "chainTip": 960255,
+  "sourceFreshness": {
+    "mempoolSpace": "2026-07-30T12:17:38.048678+00:00",
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "braiinsHashpower": null,
+    "coinGecko": "2026-07-30T12:17:38.887568+00:00"
+  },
+  "pipelineCommitSha": null,
+  "warnings": [
+    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
+  ],
+  "coverage": {
+    "blockIndexPct": 100.0,
+    "monitorCrossCheck": 100,
+    "rentalMarketPct": 0,
+    "spamAuditBlockPct": 100.0,
+    "spamClassificationPct": 0
+  },
+  "constants": {
+    "rulesetName": "BIP110",
+    "publishedBipRepository": "https://github.com/bitcoin/bips",
+    "publishedBipPath": "bip-0110.mediawiki",
+    "publishedBipCommit": "9783d61f1b9c81231581fee026c8e8cb9499d265",
+    "testVectorsCommit": "9783d61f1b9c81231581fee026c8e8cb9499d265",
+    "referenceImplementationRepository": "https://github.com/dathonohm/bitcoin",
+    "referenceImplementationCommit": "f62f5fda667f899c5d93998858ffb46a7467931a",
+    "classifierVersion": "bip9-bit4-v1",
+    "signalStartHeight": 927360,
+    "monitorHistoryStartHeight": 937440,
+    "voluntarySignalingEndHeight": 961631,
+    "mandatorySignalingStartHeight": 961632,
+    "mandatorySignalingEndHeight": 963647,
+    "maximumLockInHeight": 963648,
+    "maximumActivationHeight": 965664,
+    "activationThresholdBlocks": 1109,
+    "difficultyPeriodBlocks": 2016,
+    "signalBit": 4
+  },
+  "satire": {
+    "psuName": "Plebslop University Subscription",
+    "psuShortName": "PSU",
+    "annualPriceUsd": 790,
+    "sourceUrl": "",
+    "sourceCheckedAt": "",
+    "enabled": true
+  },
+  "summary": {
+    "blocksSinceStarted": 32896,
+    "signalingBlocks": 97,
+    "lifetimeSignalingPct": 0.29486867704280156,
+    "oneSignalPerNBlocks": 339.1340206185567,
+    "currentPeriodSignalingPct": 2.03125,
+    "currentPeriodSignalCount": 13,
+    "currentPeriodBlockCount": 640,
+    "distanceFromThresholdBlocks": 1096,
+    "currentNetworkEhS": 903.6003246886916,
+    "impliedSignalingEhS": 18.354381595239047,
+    "signalEhDays": 652.1059814564005,
+    "observedMiningRevenueSats": 30491618822,
+    "observedTransactionFeesSats": 179118822
+  },
+  "currentPrice": {
+    "usd": 64909,
+    "eur": 56538,
+    "timestamp": "2026-07-30T12:17:38.887568+00:00",
+    "label": "Current value of historical BTC amount"
+  },
+  "marketEstimate": {
+    "label": "MARKET ESTIMATE",
+    "available": false,
+    "lowSats": null,
+    "baseSats": null,
+    "highSats": null,
+    "coveragePct": 0,
+    "confidence": "UNKNOWN",
+    "reason": "No unauthenticated historical Braiins bars were available at generation time; no extrapolation was made."
+  },
+  "kratterScenario": {
+    "label": "GENERAL KRATTER SCENARIO",
+    "lossRate": 0.08,
+    "observedRevenueModel": {
+      "observedRevenueSats": 30491618822,
+      "grossModeledSpendingSats": 33143063937,
+      "modeledLossSats": 2651445115
+    },
+    "marketRentalModel": {
+      "estimatedRentalCostSats": null,
+      "modeledLossSats": null,
+      "modeledPostMiningValueSats": null
+    }
+  },
+  "periods": [
+    {
+      "periodNum": 460,
+      "startBlock": 927360,
+      "endBlock": 929375,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 1060.8233257339512,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 0.0,
+      "partial": false
+    },
+    {
+      "periodNum": 461,
+      "startBlock": 929376,
+      "endBlock": 931391,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 1061.2752079424524,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 0.0,
+      "partial": false
+    },
+    {
+      "periodNum": 462,
+      "startBlock": 931392,
+      "endBlock": 933407,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 1048.4915009560889,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 0.0,
+      "partial": false
+    },
+    {
+      "periodNum": 463,
+      "startBlock": 933408,
+      "endBlock": 935423,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 1014.0998137410458,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 0.0,
+      "partial": false
+    },
+    {
+      "periodNum": 464,
+      "startBlock": 935424,
+      "endBlock": 937439,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 900.9738304794546,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 0.0,
+      "partial": false
+    },
+    {
+      "periodNum": 465,
+      "startBlock": 937440,
+      "endBlock": 939455,
+      "totalBlocks": 2016,
+      "signalingCount": 1,
+      "signalingPct": 0.0496031746031746,
+      "networkEhS": 1033.6440201915336,
+      "impliedSignalingEhS": 0.5127202481108798,
+      "signalEhDays": 7.14983045154704,
+      "cumulativeSignalEhDays": 7.14983045154704,
+      "partial": false
+    },
+    {
+      "periodNum": 466,
+      "startBlock": 939456,
+      "endBlock": 941471,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 1038.2522617346115,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 7.14983045154704,
+      "partial": false
+    },
+    {
+      "periodNum": 467,
+      "startBlock": 941472,
+      "endBlock": 943487,
+      "totalBlocks": 2016,
+      "signalingCount": 3,
+      "signalingPct": 0.1488095238095238,
+      "networkEhS": 957.728653524678,
+      "impliedSignalingEhS": 1.4251914486974373,
+      "signalEhDays": 19.219861354682727,
+      "cumulativeSignalEhDays": 26.369691806229767,
+      "partial": false
+    },
+    {
+      "periodNum": 468,
+      "startBlock": 943488,
+      "endBlock": 945503,
+      "totalBlocks": 2016,
+      "signalingCount": 2,
+      "signalingPct": 0.0992063492063492,
+      "networkEhS": 994.7636179554609,
+      "impliedSignalingEhS": 0.986868668606608,
+      "signalEhDays": 14.16669391339608,
+      "cumulativeSignalEhDays": 40.53638571962585,
+      "partial": false
+    },
+    {
+      "periodNum": 469,
+      "startBlock": 945504,
+      "endBlock": 947519,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 970.6259337068082,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 40.53638571962585,
+      "partial": false
+    },
+    {
+      "periodNum": 470,
+      "startBlock": 947520,
+      "endBlock": 949535,
+      "totalBlocks": 2016,
+      "signalingCount": 0,
+      "signalingPct": 0.0,
+      "networkEhS": 948.2715920329761,
+      "impliedSignalingEhS": 0.0,
+      "signalEhDays": 0.0,
+      "cumulativeSignalEhDays": 40.53638571962585,
+      "partial": false
+    },
+    {
+      "periodNum": 471,
+      "startBlock": 949536,
+      "endBlock": 951551,
+      "totalBlocks": 2016,
+      "signalingCount": 7,
+      "signalingPct": 0.3472222222222222,
+      "networkEhS": 977.8715028726893,
+      "impliedSignalingEhS": 3.3953871627523937,
+      "signalEhDays": 46.75573878190148,
+      "cumulativeSignalEhDays": 87.29212450152733,
+      "partial": false
+    },
+    {
+      "periodNum": 472,
+      "startBlock": 951552,
+      "endBlock": 953567,
+      "totalBlocks": 2016,
+      "signalingCount": 16,
+      "signalingPct": 0.7936507936507936,
+      "networkEhS": 994.6811899526773,
+      "impliedSignalingEhS": 7.8942951583545815,
+      "signalEhDays": 122.98050962350868,
+      "cumulativeSignalEhDays": 210.272634125036,
+      "partial": false
+    },
+    {
+      "periodNum": 473,
+      "startBlock": 953568,
+      "endBlock": 955583,
+      "totalBlocks": 2016,
+      "signalingCount": 9,
+      "signalingPct": 0.4464285714285714,
+      "networkEhS": 894.3042894894578,
+      "impliedSignalingEhS": 3.992429863792222,
+      "signalEhDays": 52.19034626423914,
+      "cumulativeSignalEhDays": 262.4629803892751,
+      "partial": false
+    },
+    {
+      "periodNum": 474,
+      "startBlock": 955584,
+      "endBlock": 957599,
+      "totalBlocks": 2016,
+      "signalingCount": 20,
+      "signalingPct": 0.992063492063492,
+      "networkEhS": 958.2777381265358,
+      "impliedSignalingEhS": 9.506723592525157,
+      "signalEhDays": 140.1724581739071,
+      "cumulativeSignalEhDays": 402.6354385631822,
+      "partial": false
+    },
+    {
+      "periodNum": 475,
+      "startBlock": 957600,
+      "endBlock": 959615,
+      "totalBlocks": 2016,
+      "signalingCount": 26,
+      "signalingPct": 1.2896825396825395,
+      "networkEhS": 910.3219005977668,
+      "impliedSignalingEhS": 11.740262606915643,
+      "signalEhDays": 165.6685577678168,
+      "cumulativeSignalEhDays": 568.303996330999,
+      "partial": false
+    },
+    {
+      "periodNum": 476,
+      "startBlock": 959616,
+      "endBlock": 960255,
+      "totalBlocks": 640,
+      "signalingCount": 13,
+      "signalingPct": 2.03125,
+      "networkEhS": 903.6003246886916,
+      "impliedSignalingEhS": 18.354381595239047,
+      "signalEhDays": 83.80198512540144,
+      "cumulativeSignalEhDays": 652.1059814564004,
+      "partial": true
+    }
+  ],
+  "monitor": {
+    "available": true,
+    "agrees": true,
+    "data": {
+      "bip": "110",
+      "tip": 960250,
+      "chainTip": 960250,
+      "periodNum": 476,
+      "periodStart": 959616,
+      "periodEnd": 961631,
+      "totalBlocks": 635,
+      "signalingCount": 13,
+      "pct": 2.05,
+      "synced": true,
+      "updatedAt": "2026-07-30T11:14:55.120Z",
+      "periods": [
+        {
+          "periodNum": 465,
+          "startBlock": 937440,
+          "endBlock": 939455,
+          "signalingCount": 1,
+          "totalBlocks": 2016,
+          "pct": 0.05
+        },
+        {
+          "periodNum": 466,
+          "startBlock": 939456,
+          "endBlock": 941471,
+          "signalingCount": 0,
+          "totalBlocks": 2016,
+          "pct": 0
+        },
+        {
+          "periodNum": 467,
+          "startBlock": 941472,
+          "endBlock": 943487,
+          "signalingCount": 3,
+          "totalBlocks": 2016,
+          "pct": 0.15
+        },
+        {
+          "periodNum": 468,
+          "startBlock": 943488,
+          "endBlock": 945503,
+          "signalingCount": 2,
+          "totalBlocks": 2016,
+          "pct": 0.1
+        },
+        {
+          "periodNum": 469,
+          "startBlock": 945504,
+          "endBlock": 947519,
+          "signalingCount": 0,
+          "totalBlocks": 2016,
+          "pct": 0
+        },
+        {
+          "periodNum": 470,
+          "startBlock": 947520,
+          "endBlock": 949535,
+          "signalingCount": 0,
+          "totalBlocks": 2016,
+          "pct": 0
+        },
+        {
+          "periodNum": 471,
+          "startBlock": 949536,
+          "endBlock": 951551,
+          "signalingCount": 7,
+          "totalBlocks": 2016,
+          "pct": 0.35
+        },
+        {
+          "periodNum": 472,
+          "startBlock": 951552,
+          "endBlock": 953567,
+          "signalingCount": 16,
+          "totalBlocks": 2016,
+          "pct": 0.79
+        },
+        {
+          "periodNum": 473,
+          "startBlock": 953568,
+          "endBlock": 955583,
+          "signalingCount": 9,
+          "totalBlocks": 2016,
+          "pct": 0.45
+        },
+        {
+          "periodNum": 474,
+          "startBlock": 955584,
+          "endBlock": 957599,
+          "signalingCount": 20,
+          "totalBlocks": 2016,
+          "pct": 0.99
+        },
+        {
+          "periodNum": 475,
+          "startBlock": 957600,
+          "endBlock": 959615,
+          "signalingCount": 26,
+          "totalBlocks": 2016,
+          "pct": 1.29
+        }
+      ]
+    }
+  }
+}

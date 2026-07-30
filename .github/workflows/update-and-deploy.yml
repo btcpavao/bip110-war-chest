@@ -1,0 +1,106 @@
+name: Update data and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/cache@v4
+        with:
+          path: .cache/mempool
+          key: mempool-blocks-${{ runner.os }}-${{ hashFiles('config/ruleset.json') }}
+          restore-keys: |
+            mempool-blocks-${{ runner.os }}-
+
+      - name: Install pipeline
+        run: pip install -e ".[dev]"
+
+      - name: Update block index and all models
+        run: python scripts/update_all.py
+
+      - name: Validate generated schemas
+        run: python scripts/validate_data.py
+
+      - name: Test and lint pipeline
+        run: |
+          ruff check .
+          pytest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install locked frontend dependencies
+        run: npm ci
+
+      - name: Typecheck, test and lint frontend
+        run: |
+          npm run typecheck
+          npm run test
+          npm run lint
+
+      - name: Set GitHub Pages base path
+        shell: bash
+        run: |
+          if [[ "${{ github.event.repository.name }}" == *.github.io ]]; then
+            echo "BASE_PATH=/" >> "$GITHUB_ENV"
+          else
+            echo "BASE_PATH=/${{ github.event.repository.name }}/" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build static dashboard
+        run: npm run build
+
+      - name: Commit changed generated data
+        if: github.event_name != 'push'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/block-headers.json data/signaling-blocks.json public/data
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "data: refresh BIP-110 ledger [skip ci]"
+          git push
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: update-test-build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

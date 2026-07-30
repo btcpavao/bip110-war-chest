@@ -1,0 +1,20 @@
+{
+  "rulesetName": "BIP110",
+  "publishedBipRepository": "https://github.com/bitcoin/bips",
+  "publishedBipPath": "bip-0110.mediawiki",
+  "publishedBipCommit": "9783d61f1b9c81231581fee026c8e8cb9499d265",
+  "testVectorsCommit": "9783d61f1b9c81231581fee026c8e8cb9499d265",
+  "referenceImplementationRepository": "https://github.com/dathonohm/bitcoin",
+  "referenceImplementationCommit": "f62f5fda667f899c5d93998858ffb46a7467931a",
+  "classifierVersion": "bip9-bit4-v1",
+  "signalStartHeight": 927360,
+  "monitorHistoryStartHeight": 937440,
+  "voluntarySignalingEndHeight": 961631,
+  "mandatorySignalingStartHeight": 961632,
+  "mandatorySignalingEndHeight": 963647,
+  "maximumLockInHeight": 963648,
+  "maximumActivationHeight": 965664,
+  "activationThresholdBlocks": 1109,
+  "difficultyPeriodBlocks": 2016,
+  "signalBit": 4
+}

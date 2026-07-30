@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0.0",
+  "methodologyVersion": "2026-07-30.1",
+  "rulesetVersion": "bip9-bit4-v1",
+  "generatedAt": "2026-07-30T12:17:38.887568+00:00",
+  "chainTip": 960255,
+  "sourceFreshness": {
+    "mempoolSpace": "2026-07-30T12:17:38.048678+00:00",
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "braiinsHashpower": null,
+    "coinGecko": "2026-07-30T12:17:38.887568+00:00"
+  },
+  "pipelineCommitSha": null,
+  "warnings": [
+    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
+  ],
+  "coverage": {
+    "blockIndexPct": 100.0,
+    "monitorCrossCheck": 100,
+    "rentalMarketPct": 0,
+    "spamAuditBlockPct": 100.0,
+    "spamClassificationPct": 0
+  },
+  "entries": [
+    {
+      "name": "Matthew Kratter",
+      "title": "General Kratter",
+      "verifiedSpendBtc": 0.1,
+      "maximumReportedInterimLossRate": 0.08,
+      "maximumReportedInterimLossBtc": 0.008,
+      "historicalUsdLoss": null,
+      "historicalEurLoss": null,
+      "annualPsuSubscriptionUsd": 790.0,
+      "evidence": [
+        {
+          "sourceUrl": "https://www.youtube.com/watch?v=EoU0FMf7QeI",
+          "title": "Bitcoin Home Mining Update (New Experiment)",
+          "date": "2026-05-05",
+          "archivedScreenshotPath": null,
+          "quoteOrNumericalEvidence": "Public video demonstrates rented-hash accounting, but the exact 0.1 BTC / 8% reconstruction still requires a pinned matching receipt.",
+          "confidence": "LOW",
+          "curatorNote": "The supplied 0.1 BTC and 8% figures are retained for the requested illustrative scenario, not promoted to VERIFIED until matching primary evidence is pinned."
+        }
+      ],
+      "status": "EVIDENCE_REVIEW_REQUIRED",
+      "notes": "The 8% figure drives only the explicitly labeled General Kratter Scenario. It is not presented as verified historical P&L.",
+      "historicalPsuLoss": null
+    },
+    {
+      "name": "Fred Krueger",
+      "title": "Promoter",
+      "verifiedSpendBtc": null,
+      "maximumReportedInterimLossRate": null,
+      "maximumReportedInterimLossBtc": null,
+      "historicalUsdLoss": null,
+      "historicalEurLoss": null,
+      "annualPsuSubscriptionUsd": 790.0,
+      "evidence": [],
+      "status": "NO_PUBLIC_RECEIPT",
+      "notes": "No publicly verifiable financial commitment is recorded in this curated dataset. This is not evidence of zero commitment.",
+      "historicalPsuLoss": null
+    }
+  ]
+}

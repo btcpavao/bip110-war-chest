@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "methodologyVersion": "2026-07-30.1",
+  "rulesetVersion": "bip9-bit4-v1",
+  "generatedAt": "2026-07-30T12:17:38.887568+00:00",
+  "chainTip": 960255,
+  "sourceFreshness": {
+    "mempoolSpace": "2026-07-30T12:17:38.048678+00:00",
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "braiinsHashpower": null,
+    "coinGecko": "2026-07-30T12:17:38.887568+00:00"
+  },
+  "pipelineCommitSha": null,
+  "warnings": [
+    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
+  ],
+  "coverage": {
+    "blockIndexPct": 100.0,
+    "monitorCrossCheck": 100,
+    "rentalMarketPct": 0,
+    "spamAuditBlockPct": 100.0,
+    "spamClassificationPct": 0
+  },
+  "formulas": {
+    "signalDetection": "(version & 0xe0000000) === 0x20000000 && (version & (1 << 4)) !== 0",
+    "networkHashrate": "difficulty × 2^32 ÷ 600 ÷ 10^18 EH/s",
+    "signalEhDays": "(signal blocks ÷ observed blocks) × network EH/s × elapsed days",
+    "observedRevenueGrossSpend": "observed signaling-block revenue ÷ 0.92",
+    "observedRevenueLoss": "gross modeled spending − observed revenue",
+    "marketLoss": "estimated historical rental cost × 0.08",
+    "psu": "historical USD amount ÷ configured annual PSU price",
+    "filterTax": "min(BIP110-invalid missing fees, max(expected fees − actual fees, 0))"
+  },
+  "disclaimers": [
+    "Signaling does not prove filtering.",
+    "Signaling does not prove rented hash rate.",
+    "Block outcomes are affected by mining luck.",
+    "Pool identity may not identify the actual hash owner.",
+    "Historical rental-market coverage may be incomplete.",
+    "A public mempool observer does not possess the miner's exact private block template.",
+    "The Kratter 8% scenario is illustrative.",
+    "PSU is a satirical comparison unit.",
+    "Exact historical miner P&L is not directly observable.",
+    "Missing evidence must not be treated as zero."
+  ]
+}
