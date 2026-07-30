@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": "NiceHash public SHA256AsicBoost order book",
+  "records": [
+    {
+      "timestamp": "2026-07-30T12:44:21.078144995Z",
+      "algorithm": "SHA256AsicBoost",
+      "currency": "BTC",
+      "unit": "BTC/EH/day",
+      "lowSatsPerEhDay": 49900000,
+      "baseSatsPerEhDay": 50640000,
+      "highSatsPerEhDay": 50640000,
+      "totalSpeedEhS": 16.70846968,
+      "activePaidOrderCount": 579,
+      "quantiles": "payingSpeed-weighted P25 / P50 / P75",
+      "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
+    }
+  ]
+}

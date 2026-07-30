@@ -97,6 +97,29 @@ def rental_cost(signal_eh_days_value: float, price: RentalPrice) -> dict[str, fl
     }
 
 
+def weighted_quantile(
+    values_and_weights: Iterable[tuple[float, float]],
+    quantile: float,
+) -> float | None:
+    if not 0 <= quantile <= 1:
+        raise ValueError("quantile must be in [0, 1]")
+    rows = sorted(
+        (value, weight)
+        for value, weight in values_and_weights
+        if value >= 0 and weight > 0
+    )
+    if not rows:
+        return None
+    total_weight = sum(weight for _, weight in rows)
+    target = total_weight * quantile
+    cumulative = 0.0
+    for value, weight in rows:
+        cumulative += weight
+        if cumulative >= target:
+            return value
+    return rows[-1][0]
+
+
 def estimated_net_filter_cost(
     actual_fees_sats: int,
     expected_fees_sats: int | None,

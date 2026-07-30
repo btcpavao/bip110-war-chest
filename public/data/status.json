@@ -1,24 +1,24 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.1",
+  "methodologyVersion": "2026-07-30.2",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T12:34:20.322820+00:00",
+  "generatedAt": "2026-07-30T12:44:31.007166+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T12:24:56.791Z",
-    "braiinsHashpower": null,
-    "coinGecko": "2026-07-30T12:34:20.322820+00:00"
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "niceHashOrderBook": "2026-07-30T12:44:21.078144995Z",
+    "coinGecko": "2026-07-30T12:44:31.007166+00:00"
   },
-  "pipelineCommitSha": "89670eb482a5382011d61d1a0c92df4798129d2c",
+  "pipelineCommitSha": "8d59f5132c528394e5c4b3516f55948bb216ce09",
   "warnings": [
-    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
   ],
   "coverage": {
     "blockIndexPct": 100.0,
     "monitorCrossCheck": 100,
-    "rentalMarketPct": 0,
+    "rentalMarketPct": 100,
     "spamAuditBlockPct": 100.0,
     "spamClassificationPct": 0
   },

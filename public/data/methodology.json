@@ -1,24 +1,24 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.1",
+  "methodologyVersion": "2026-07-30.2",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T12:34:20.322820+00:00",
+  "generatedAt": "2026-07-30T12:44:31.007166+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T12:24:56.791Z",
-    "braiinsHashpower": null,
-    "coinGecko": "2026-07-30T12:34:20.322820+00:00"
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "niceHashOrderBook": "2026-07-30T12:44:21.078144995Z",
+    "coinGecko": "2026-07-30T12:44:31.007166+00:00"
   },
-  "pipelineCommitSha": "89670eb482a5382011d61d1a0c92df4798129d2c",
+  "pipelineCommitSha": "8d59f5132c528394e5c4b3516f55948bb216ce09",
   "warnings": [
-    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
   ],
   "coverage": {
     "blockIndexPct": 100.0,
     "monitorCrossCheck": 100,
-    "rentalMarketPct": 0,
+    "rentalMarketPct": 100,
     "spamAuditBlockPct": 100.0,
     "spamClassificationPct": 0
   },
@@ -28,7 +28,8 @@
     "signalEhDays": "(signal blocks ÷ observed blocks) × network EH/s × elapsed days",
     "observedRevenueGrossSpend": "observed signaling-block revenue ÷ 0.92",
     "observedRevenueLoss": "gross modeled spending − observed revenue",
-    "marketLoss": "estimated historical rental cost × 0.08",
+    "spotReplacementCost": "signal EH-days × NiceHash paying-speed-weighted spot BTC/EH/day",
+    "marketLoss": "current spot replacement cost × 0.08",
     "psu": "historical USD amount ÷ configured annual PSU price",
     "filterTax": "min(BIP110-invalid missing fees, max(expected fees − actual fees, 0))"
   },
@@ -37,7 +38,8 @@
     "Signaling does not prove rented hash rate.",
     "Block outcomes are affected by mining luck.",
     "Pool identity may not identify the actual hash owner.",
-    "Historical rental-market coverage may be incomplete.",
+    "NiceHash spot replacement cost is not a historical rental invoice.",
+    "Snapshot history begins with this pipeline and is not backfilled.",
     "A public mempool observer does not possess the miner's exact private block template.",
     "The Kratter 8% scenario is illustrative.",
     "PSU is a satirical comparison unit.",

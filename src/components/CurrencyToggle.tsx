@@ -1,6 +1,6 @@
 import type { Currency } from '../lib/format'
 
-const currencies: Currency[] = ['BTC', 'USD', 'EUR', 'PSU']
+const currencies: Currency[] = ['BTC', 'USD', 'PSU']
 
 export function CurrencyToggle({
   value,

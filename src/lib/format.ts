@@ -1,4 +1,4 @@
-export type Currency = 'BTC' | 'USD' | 'EUR' | 'PSU'
+export type Currency = 'BTC' | 'USD' | 'PSU'
 
 const SATS_PER_BTC = 100_000_000
 
@@ -20,7 +20,7 @@ export function formatSatsAsBtc(sats: number): string {
 export function formatMoney(
   sats: number | null,
   currency: Currency,
-  price: { usd: number | null; eur: number | null },
+  price: { usd: number | null },
   psuAnnualUsd: number,
 ): string {
   if (sats === null) return 'Unavailable'
@@ -34,15 +34,6 @@ export function formatMoney(
           currency: 'USD',
           maximumFractionDigits: 0,
         }).format(btc * price.usd)
-  }
-  if (currency === 'EUR') {
-    return price.eur === null
-      ? 'Unavailable'
-      : new Intl.NumberFormat('en-IE', {
-          style: 'currency',
-          currency: 'EUR',
-          maximumFractionDigits: 0,
-        }).format(btc * price.eur)
   }
   if (price.usd === null) return 'Unavailable'
   return `${(btc * price.usd / psuAnnualUsd).toLocaleString('en-US', {

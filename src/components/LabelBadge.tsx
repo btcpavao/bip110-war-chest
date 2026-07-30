@@ -12,7 +12,7 @@ export type DataLabel =
 
 const explanations: Record<DataLabel, string> = {
   VERIFIED: 'Derived directly from public blockchain data or a pinned public receipt.',
-  'MARKET ESTIMATE': 'Estimated from observed block share, network hash rate and public rental-market prices.',
+  'MARKET ESTIMATE': 'Current replacement-cost benchmark from the public NiceHash SHA256AsicBoost order book; not a historical invoice.',
   'GENERAL KRATTER SCENARIO': 'Illustrative model applying an 8% loss assumption to the selected economic footprint.',
   'PUBLIC MEMPOOL ESTIMATE': 'Estimated from the public mempool.space block observer; not a miner’s private template.',
   'NO PUBLIC RECEIPT': 'No publicly verifiable financial commitment has been recorded. This does not mean zero.',

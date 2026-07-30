@@ -68,7 +68,6 @@ class Receipt(BaseModel):
     maximumReportedInterimLossRate: float | None = Field(default=None, ge=0, le=1)
     maximumReportedInterimLossBtc: float | None = Field(default=None, ge=0)
     historicalUsdLoss: float | None = Field(default=None, ge=0)
-    historicalEurLoss: float | None = Field(default=None, ge=0)
     annualPsuSubscriptionUsd: float = Field(gt=0)
     evidence: list[Evidence]
     status: Literal[

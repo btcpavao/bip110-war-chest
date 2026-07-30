@@ -1,24 +1,24 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.1",
+  "methodologyVersion": "2026-07-30.2",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T12:34:20.322820+00:00",
+  "generatedAt": "2026-07-30T12:44:31.007166+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T12:24:56.791Z",
-    "braiinsHashpower": null,
-    "coinGecko": "2026-07-30T12:34:20.322820+00:00"
+    "bip110Monitor": "2026-07-30T11:14:55.120Z",
+    "niceHashOrderBook": "2026-07-30T12:44:21.078144995Z",
+    "coinGecko": "2026-07-30T12:44:31.007166+00:00"
   },
-  "pipelineCommitSha": "89670eb482a5382011d61d1a0c92df4798129d2c",
+  "pipelineCommitSha": "8d59f5132c528394e5c4b3516f55948bb216ce09",
   "warnings": [
-    "Historical public rental-market bars are unavailable without a Braiins API key; market totals are intentionally null.",
+    "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
   ],
   "coverage": {
     "blockIndexPct": 100.0,
     "monitorCrossCheck": 100,
-    "rentalMarketPct": 0,
+    "rentalMarketPct": 100,
     "spamAuditBlockPct": 100.0,
     "spamClassificationPct": 0
   },
@@ -66,20 +66,28 @@
     "observedTransactionFeesSats": 179118822
   },
   "currentPrice": {
-    "usd": 64804,
-    "eur": 56469,
-    "timestamp": "2026-07-30T12:34:20.322820+00:00",
+    "usd": 64833,
+    "timestamp": "2026-07-30T12:44:31.007166+00:00",
     "label": "Current value of historical BTC amount"
   },
   "marketEstimate": {
     "label": "MARKET ESTIMATE",
-    "available": false,
-    "lowSats": null,
-    "baseSats": null,
-    "highSats": null,
-    "coveragePct": 0,
-    "confidence": "UNKNOWN",
-    "reason": "No unauthenticated historical Braiins bars were available at generation time; no extrapolation was made."
+    "available": true,
+    "lowSats": 32539078979,
+    "baseSats": 33021622435,
+    "highSats": 33021622435,
+    "lowSatsPerEhDay": 49900000,
+    "baseSatsPerEhDay": 50640000,
+    "highSatsPerEhDay": 50640000,
+    "coveragePct": 100,
+    "confidence": "MEDIUM",
+    "source": "NiceHash public SHA256AsicBoost order book",
+    "algorithm": "SHA256AsicBoost",
+    "asOf": "2026-07-30T12:44:21.078144995Z",
+    "totalSpeedEhS": 16.70846968,
+    "activePaidOrderCount": 579,
+    "snapshotCount": 1,
+    "reason": "Current NiceHash SHA256AsicBoost paying-speed-weighted spot quote applied to the observed signal EH-day footprint as a replacement-cost benchmark. It is not claimed as the historical invoice."
   },
   "kratterScenario": {
     "label": "GENERAL KRATTER SCENARIO",
@@ -90,9 +98,9 @@
       "modeledLossSats": 2651445115
     },
     "marketRentalModel": {
-      "estimatedRentalCostSats": null,
-      "modeledLossSats": null,
-      "modeledPostMiningValueSats": null
+      "estimatedRentalCostSats": 33021622435,
+      "modeledLossSats": 2641729795,
+      "modeledPostMiningValueSats": 30379892640
     }
   },
   "periods": [
@@ -323,16 +331,16 @@
     "agrees": true,
     "data": {
       "bip": "110",
-      "tip": 960256,
-      "chainTip": 960256,
+      "tip": 960250,
+      "chainTip": 960250,
       "periodNum": 476,
       "periodStart": 959616,
       "periodEnd": 961631,
-      "totalBlocks": 641,
+      "totalBlocks": 635,
       "signalingCount": 13,
-      "pct": 2.03,
+      "pct": 2.05,
       "synced": true,
-      "updatedAt": "2026-07-30T12:24:56.791Z",
+      "updatedAt": "2026-07-30T11:14:55.120Z",
       "periods": [
         {
           "periodNum": 465,

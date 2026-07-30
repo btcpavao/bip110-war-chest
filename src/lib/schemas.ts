@@ -101,7 +101,6 @@ export const dashboardSchema = envelopeSchema.extend({
   }),
   currentPrice: z.object({
     usd: z.number().nullable(),
-    eur: z.number().nullable(),
     timestamp: z.string().nullable(),
     label: z.string(),
   }),
@@ -111,8 +110,17 @@ export const dashboardSchema = envelopeSchema.extend({
     lowSats: z.number().nullable(),
     baseSats: z.number().nullable(),
     highSats: z.number().nullable(),
+    lowSatsPerEhDay: z.number().nullable(),
+    baseSatsPerEhDay: z.number().nullable(),
+    highSatsPerEhDay: z.number().nullable(),
     coveragePct: z.number(),
     confidence: z.string(),
+    source: z.string(),
+    algorithm: z.string(),
+    asOf: z.string().nullable(),
+    totalSpeedEhS: z.number().nullable(),
+    activePaidOrderCount: z.number().int(),
+    snapshotCount: z.number().int(),
     reason: z.string(),
   }),
   kratterScenario: z.object({
@@ -164,7 +172,6 @@ export const receiptsDatasetSchema = envelopeSchema.extend({
     maximumReportedInterimLossRate: z.number().nullable(),
     maximumReportedInterimLossBtc: z.number().nullable(),
     historicalUsdLoss: z.number().nullable(),
-    historicalEurLoss: z.number().nullable(),
     annualPsuSubscriptionUsd: z.number(),
     evidence: z.array(evidenceSchema),
     status: z.enum([

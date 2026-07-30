@@ -11,6 +11,7 @@ from pipeline.calculations import (
     signal_eh_days,
     signals_bip110,
     usd_to_psu,
+    weighted_quantile,
 )
 
 
@@ -46,6 +47,14 @@ def test_hashrate_and_eh_days() -> None:
 def test_rental_cost_preserves_missing_coverage() -> None:
     result = rental_cost(2, RentalPrice(10, None, 30))
     assert result == {"lowSats": 20, "baseSats": None, "highSats": 60}
+
+
+def test_weighted_quantile_uses_paid_speed_as_market_depth() -> None:
+    rows = [(0.4, 1), (0.5, 8), (0.9, 1)]
+    assert weighted_quantile(rows, 0.25) == 0.5
+    assert weighted_quantile(rows, 0.50) == 0.5
+    assert weighted_quantile(rows, 0.75) == 0.5
+    assert weighted_quantile([], 0.50) is None
 
 
 def test_kratter_models_remain_distinct() -> None:

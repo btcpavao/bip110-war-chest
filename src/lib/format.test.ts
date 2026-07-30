@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { formatMoney, formatPercent, formatSatsAsBtc } from './format'
 
 describe('financial formatting', () => {
-  const price = { usd: 100_000, eur: 90_000 }
+  const price = { usd: 100_000 }
 
   it('preserves BTC as the native primary unit', () => {
     expect(formatSatsAsBtc(100_000_000)).toBe('1.00 BTC')
@@ -10,11 +10,11 @@ describe('financial formatting', () => {
   })
 
   it('labels missing fiat coverage as unavailable', () => {
-    expect(formatMoney(100_000_000, 'USD', { usd: null, eur: null }, 790)).toBe('Unavailable')
+    expect(formatMoney(100_000_000, 'USD', { usd: null }, 790)).toBe('Unavailable')
   })
 
   it('converts the configured PSU comparison through USD', () => {
-    expect(formatMoney(79_000_000, 'PSU', { usd: 1_000, eur: null }, 790)).toBe('1 PSU')
+    expect(formatMoney(79_000_000, 'PSU', { usd: 1_000 }, 790)).toBe('1 PSU')
   })
 
   it('formats percentages without changing the value', () => {

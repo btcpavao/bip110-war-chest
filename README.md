@@ -64,8 +64,8 @@ python scripts/update_all.py
 
 - [mempool.space API](https://mempool.space/docs/api/rest): chain tip, block version, timestamp, difficulty, reward, fees, pool attribution and public block-template audit fields.
 - [BIP-110 monitor](https://bip110monitor.com/api): period-level cross-check only. It is not used as the signaling classifier.
-- [Braiins Hashpower API](https://hashpower.braiins.com/api/): preferred OHLCV rental-market source. If authenticated historical bars are unavailable, coverage remains zero and market totals remain `null`.
-- [CoinGecko API](https://www.coingecko.com/en/api): current BTC/USD and BTC/EUR only when available. Current-price conversions are labeled “Current value of historical BTC amount.”
+- [NiceHash public order-book API](https://www.nicehash.com/docs/rest/get-main-api-v2-hashpower-orderBook): live `SHA256AsicBoost` buyer orders and paid speed, quoted in BTC/EH/day without an API key.
+- [CoinGecko API](https://www.coingecko.com/en/api): current BTC/USD when available. Current-price conversions are labeled “Current value of historical BTC amount.”
 - Manual public evidence in `data/manual/influencer-receipts.json`.
 
 ## Signaling methodology
@@ -112,20 +112,20 @@ sum(block subsidy + transaction fees)
 
 This is verified blockchain revenue, not proof that a specific promoter received it or that hash rate was rented.
 
-## Historical rental-market estimate
+## Current hashpower replacement cost
 
-For each day or difficulty period:
+The pipeline downloads every page of the public NiceHash `SHA256AsicBoost` order book. Only live BTC orders with positive `payingSpeed` count. Market depth is weighted by actual paid speed:
 
 ```text
-estimated cost = signal EH-days × historical sats/EH/day
-low = daily low
-base = daily median or VWAP
-high = daily high
+low price = paying-speed-weighted P25
+base price = paying-speed-weighted P50
+high price = paying-speed-weighted P75
+current replacement cost = signal EH-days × current sats/EH/day
 ```
 
-Missing market history is excluded. It is never silently filled with a current quote. The preferred Braiins endpoint currently requires an API key; without authenticated historical bars the checked-in dataset reports zero coverage and unavailable totals.
+This is an observable current market benchmark, not a claim about what miners historically paid. Each scheduled run appends an aggregate snapshot to `data/nicehash-market-snapshots.json`, allowing a native history to accumulate from the first successful observation onward.
 
-Configure a secret-backed authenticated client before enabling live Braiins ingestion. Do not commit an API key.
+No current quote is backfilled into earlier dates. If the live API is temporarily unavailable, the last stored snapshot may be displayed with reduced confidence and zero live-coverage status.
 
 ## General Kratter 8% scenario
 
@@ -138,14 +138,14 @@ gross modeled spending = observed signaling-block revenue ÷ 0.92
 modeled loss = gross modeled spending − observed revenue
 ```
 
-Historical-rental mode:
+Current spot-replacement mode:
 
 ```text
-modeled loss = estimated rental cost × 0.08
-modeled post-mining value = estimated rental cost × 0.92
+modeled loss = current replacement cost × 0.08
+modeled post-mining value = current replacement cost × 0.92
 ```
 
-The second mode stays unavailable when rental coverage is missing. The scenario is not a claim that all signaling hash rate was rented or that every participant lost 8%.
+The scenario is not a claim that all signaling hash rate was rented, that the current quote applied historically, or that every participant lost 8%.
 
 ## PSU
 
@@ -193,7 +193,7 @@ The supplied Matthew Kratter `0.1 BTC / 8%` reconstruction remains `EVIDENCE_REV
 
 ## Historical prices
 
-Historical receipt amounts must use BTC/USD and BTC/EUR near the verified experiment timestamp. Nearest-hour prices are preferred; daily data must be labeled `daily`. The pipeline does not use today’s price for a historical loss. Any present-day comparison is explicitly labeled “Current value of historical BTC amount.”
+Historical receipt amounts must use BTC/USD near the verified experiment timestamp. Nearest-hour prices are preferred; daily data must be labeled `daily`. The pipeline does not use today’s price for a historical loss. Any present-day comparison is explicitly labeled “Current value of historical BTC amount.”
 
 ## Cache, resume and reorg handling
 
@@ -230,6 +230,7 @@ The separate **Manual backfill** workflow accepts `startHeight`, `endHeight`, `b
 - `public/data/spam-rug-tax.json`
 - `public/data/methodology.json`
 - `public/data/status.json`
+- `data/nicehash-market-snapshots.json`
 
 All major values carry schema, methodology, ruleset, generation time, chain tip, freshness, commit SHA, warnings and coverage.
 
@@ -239,13 +240,14 @@ All major values carry schema, methodology, ruleset, generation time, chain tip,
 2. Signaling does not prove rented hash rate.
 3. Block outcomes are affected by mining luck.
 4. Pool identity may not identify the actual hash owner.
-5. Historical rental coverage may be incomplete or unavailable.
-6. A public mempool observer does not have a miner’s exact private template.
-7. The 8% scenario is illustrative.
-8. PSU is satire.
-9. Exact historical miner P&L is not directly observable.
-10. Missing evidence is not zero.
-11. Full BIP-110 transaction classification requires spent-output context and the activation-height grandfathering rules.
+5. NiceHash spot replacement cost is not a historical rental invoice.
+6. Market snapshot history begins with this pipeline and is not backfilled.
+7. A public mempool observer does not have a miner’s exact private template.
+8. The 8% scenario is illustrative.
+9. PSU is satire.
+10. Exact historical miner P&L is not directly observable.
+11. Missing evidence is not zero.
+12. Full BIP-110 transaction classification requires spent-output context and the activation-height grandfathering rules.
 
 ## License
 

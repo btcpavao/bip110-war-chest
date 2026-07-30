@@ -64,7 +64,8 @@ const methodologyDisclaimers = [
   'Signaling does not prove rented hash rate.',
   'Block outcomes are affected by mining luck.',
   'Pool identity may not identify the actual hash owner.',
-  'Historical rental-market coverage may be incomplete.',
+  'NiceHash spot replacement cost is not a historical rental invoice.',
+  'Market snapshot history starts with this pipeline and is not backfilled.',
   'A public mempool observer does not possess the miner’s exact private block template.',
   'The Kratter 8% scenario is illustrative.',
   'PSU is a satirical comparison unit.',
@@ -198,6 +199,26 @@ function App() {
       scenarioGross: formatMoney(adjustedGross, currency, price, psu),
       observedRevenue: formatMoney(adjustedRevenue, currency, price, psu),
       marketBase: formatMoney(dashboard.marketEstimate.baseSats, currency, price, psu),
+      marketLow: formatMoney(dashboard.marketEstimate.lowSats, currency, price, psu),
+      marketHigh: formatMoney(dashboard.marketEstimate.highSats, currency, price, psu),
+      marketRate: formatMoney(
+        dashboard.marketEstimate.baseSatsPerEhDay,
+        currency,
+        price,
+        psu,
+      ),
+      marketScenarioLoss: formatMoney(
+        dashboard.kratterScenario.marketRentalModel.modeledLossSats,
+        currency,
+        price,
+        psu,
+      ),
+      marketPostValue: formatMoney(
+        dashboard.kratterScenario.marketRentalModel.modeledPostMiningValueSats,
+        currency,
+        price,
+        psu,
+      ),
       miningRevenue: formatMoney(
         dashboard.summary.observedMiningRevenueSats,
         currency,
@@ -270,11 +291,15 @@ function App() {
             <CardContent>
               <CurrencyToggle value={currency} onChange={setCurrency} />
               <strong className="hero-amount">{display.marketBase}</strong>
-              <p className="range-line">Low — · High —</p>
+              <p className="range-line">Low {display.marketLow} · High {display.marketHigh}</p>
               <div className="availability-note">
-                <FileQuestion size={18} />
+                {dashboard.marketEstimate.available ? <Gauge size={18} /> : <FileQuestion size={18} />}
                 <div>
-                  <strong>Estimate unavailable — not extrapolated</strong>
+                  <strong>
+                    {dashboard.marketEstimate.available
+                      ? `${display.marketRate} per EH/day`
+                      : 'Estimate unavailable'}
+                  </strong>
                   <span>{dashboard.marketEstimate.reason}</span>
                 </div>
               </div>
@@ -336,11 +361,6 @@ function App() {
                   value={kratter?.historicalUsdLoss == null ? 'Unavailable' : `$${formatInteger(kratter.historicalUsdLoss)}`}
                   badge="UNKNOWN"
                   note="Not converted without a verified experiment date."
-                />
-                <DataValue
-                  label="Historical EUR loss"
-                  value={kratter?.historicalEurLoss == null ? 'Unavailable' : `€${formatInteger(kratter.historicalEurLoss)}`}
-                  badge="UNKNOWN"
                 />
                 <div className="evidence-links">
                   {kratter?.evidence.map((evidence) => (
@@ -439,7 +459,7 @@ function App() {
                   <label>Scenario foundation</label>
                   <div className="stacked-toggle">
                     <button type="button" className={scenarioMode === 'revenue' ? 'is-active' : ''} onClick={() => setScenarioMode('revenue')}>Observed block revenue model</button>
-                    <button type="button" className={scenarioMode === 'market' ? 'is-active' : ''} onClick={() => setScenarioMode('market')}>Historical hash-rental market model</button>
+                    <button type="button" className={scenarioMode === 'market' ? 'is-active' : ''} onClick={() => setScenarioMode('market')}>Current spot replacement model</button>
                   </div>
                   <label className="check-row">
                     <input type="checkbox" checked={includeFees} onChange={(event) => setIncludeFees(event.target.checked)} />
@@ -459,7 +479,7 @@ function App() {
                 <Tabs.Content value="scenario">
                   <LabelBadge label="GENERAL KRATTER SCENARIO" />
                   <p className="eyebrow">Maximum benefit of the doubt</p>
-                  <h3>{scenarioMode === 'revenue' ? 'Observed block revenue model' : 'Historical rental market model'}</h3>
+                  <h3>{scenarioMode === 'revenue' ? 'Observed block revenue model' : 'Current spot replacement model'}</h3>
                   {scenarioMode === 'revenue' ? (
                     <>
                       <DataValue label="Observed mining revenue" value={display.observedRevenue} badge="VERIFIED" />
@@ -468,21 +488,24 @@ function App() {
                       <DataValue label="Modeled loss" value={display.scenarioLoss} badge="GENERAL KRATTER SCENARIO" note="8% illustrative assumption" />
                     </>
                   ) : (
-                    <div className="unavailable-panel">
-                      <FileQuestion size={28} />
-                      <strong>Historical market coverage unavailable</strong>
-                      <p>No rental loss is calculated without historical prices.</p>
-                    </div>
+                    <>
+                      <DataValue label="Spot replacement budget" value={display.marketBase} badge="MARKET ESTIMATE" />
+                      <span className="formula-line">modeled loss = current replacement budget × 0.08</span>
+                      <DataValue label="Modeled loss" value={display.marketScenarioLoss} badge="GENERAL KRATTER SCENARIO" />
+                      <DataValue label="Modeled post-mining value" value={display.marketPostValue} badge="GENERAL KRATTER SCENARIO" />
+                    </>
                   )}
                 </Tabs.Content>
                 <Tabs.Content value="market">
                   <LabelBadge label="MARKET ESTIMATE" />
-                  <p className="eyebrow">Estimated market cost of the signaling hash-rate equivalent</p>
+                  <p className="eyebrow">Current replacement cost of the signaling hash-rate equivalent</p>
                   <h3>{display.marketBase}</h3>
-                  <div className="unavailable-panel">
-                    <FileQuestion size={28} />
-                    <strong>Coverage: 0%</strong>
+                  <div className="availability-note">
+                    <Gauge size={28} />
+                    <div>
+                      <strong>NiceHash spot coverage: {formatPercent(dashboard.marketEstimate.coveragePct, 0)}</strong>
                     <p>{dashboard.marketEstimate.reason}</p>
+                    </div>
                   </div>
                 </Tabs.Content>
                 <Tabs.Content value="verified">
@@ -574,12 +597,25 @@ function App() {
             </Card>
           </div>
           <Card className="market-missing">
-            <FileQuestion size={42} />
+            <Gauge size={42} />
             <div>
-              <h3>Rental price history: no public bars, no headline total</h3>
-              <p>Braiins documents OHLCV bars, but the live endpoint requires an API key. The pipeline stores this as missing coverage instead of applying a current quote backward through history.</p>
+              <h3>NiceHash SHA256AsicBoost spot market</h3>
+              <p>
+                Weighted median: <strong>{display.marketRate} per EH/day</strong>. The low/base/high
+                range uses paying-speed-weighted P25/P50/P75 across active orders. Scheduled runs
+                preserve snapshots from now onward; earlier dates are not backfilled.
+              </p>
+              <p className="method-note">
+                As of {dashboard.marketEstimate.asOf ? new Date(dashboard.marketEstimate.asOf).toLocaleString('en-GB') : 'unavailable'}
+                {' · '}{dashboard.marketEstimate.totalSpeedEhS?.toFixed(2) ?? '—'} EH/s
+                {' · '}{formatInteger(dashboard.marketEstimate.activePaidOrderCount)} active paid orders
+                {' · '}{formatInteger(dashboard.marketEstimate.snapshotCount)} stored snapshots
+              </p>
             </div>
-            <div className="coverage-dial"><strong>0%</strong><span>market coverage</span></div>
+            <div className="coverage-dial">
+              <strong>{formatPercent(dashboard.marketEstimate.coveragePct, 0)}</strong>
+              <span>spot coverage</span>
+            </div>
           </Card>
         </section>
 
@@ -631,7 +667,8 @@ function App() {
                 <div><span>Signal detection</span><code>(version &amp; 0xe0000000) === 0x20000000 &amp;&amp; bit 4</code></div>
                 <div><span>Hash-rate footprint</span><code>signal share × network EH/s × elapsed days</code></div>
                 <div><span>Revenue scenario</span><code>gross = observed revenue ÷ 0.92</code></div>
-                <div><span>Market scenario</span><code>loss = historical rental cost × 0.08</code></div>
+                <div><span>Spot replacement cost</span><code>signal EH-days × NiceHash BTC/EH/day</code></div>
+                <div><span>Market scenario</span><code>loss = spot replacement cost × 0.08</code></div>
                 <div><span>PSU</span><code>historical USD amount ÷ ${dashboard.satire.annualPriceUsd}</code></div>
                 <div><span>Filter tax</span><code>min(invalid missing fees, positive template fee gap)</code></div>
               </div>
@@ -642,7 +679,7 @@ function App() {
                 <a href={`https://github.com/bitcoin/bips/blob/${dashboard.constants.publishedBipCommit}/bip-0110.mediawiki`} target="_blank" rel="noreferrer">Pinned BIP-110 spec <ExternalLink size={13} /></a>
                 <a href="https://mempool.space/docs/api/rest" target="_blank" rel="noreferrer">mempool.space API <ExternalLink size={13} /></a>
                 <a href="https://bip110monitor.com/api" target="_blank" rel="noreferrer">BIP-110 monitor API <ExternalLink size={13} /></a>
-                <a href="https://hashpower.braiins.com/api/" target="_blank" rel="noreferrer">Braiins Hashpower API <ExternalLink size={13} /></a>
+                <a href="https://www.nicehash.com/docs/rest/get-main-api-v2-hashpower-orderBook" target="_blank" rel="noreferrer">NiceHash order-book API <ExternalLink size={13} /></a>
               </div>
             </Collapsible.Content>
           </Collapsible.Root>

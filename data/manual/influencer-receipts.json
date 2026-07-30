@@ -8,7 +8,6 @@
       "maximumReportedInterimLossRate": 0.08,
       "maximumReportedInterimLossBtc": 0.008,
       "historicalUsdLoss": null,
-      "historicalEurLoss": null,
       "annualPsuSubscriptionUsd": 790,
       "evidence": [
         {
@@ -31,7 +30,6 @@
       "maximumReportedInterimLossRate": null,
       "maximumReportedInterimLossBtc": null,
       "historicalUsdLoss": null,
-      "historicalEurLoss": null,
       "annualPsuSubscriptionUsd": 790,
       "evidence": [],
       "status": "NO_PUBLIC_RECEIPT",
