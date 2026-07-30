@@ -55,6 +55,13 @@ const periodSchema = z.object({
   partial: z.boolean(),
 })
 
+const recruitSourceSchema = z.object({
+  title: z.string(),
+  url: z.string().url(),
+  kind: z.string(),
+  confidence: z.enum(['HIGH', 'MEDIUM', 'LOW']),
+})
+
 const envelopeSchema = z.object({
   schemaVersion: z.string(),
   methodologyVersion: z.string(),
@@ -132,6 +139,43 @@ export const dashboardSchema = envelopeSchema.extend({
     timestamp: z.string(),
     confidence: z.enum(['HIGH', 'MEDIUM', 'LOW', 'UNKNOWN']),
     note: z.string(),
+  }),
+  highValueRecruit: z.object({
+    name: z.literal('Fred Krueger'),
+    publicSupport: z.object({
+      bip110SupportActive: z.boolean(),
+      profileLabel: z.string(),
+      spacesParticipation: z.string(),
+      supportEvidence: z.array(recruitSourceSchema),
+    }),
+    resumeScale: z.object({
+      tenExitsListed: z.boolean(),
+      aggregateExitValueUsd: z.number().nonnegative(),
+      aggregateExitValueLabel: z.string(),
+      liquidityDisclaimer: z.string(),
+      sources: z.array(recruitSourceSchema),
+    }),
+    stupidCoin: z.object({
+      present: z.boolean(),
+      label: z.string(),
+      description: z.string(),
+      sources: z.array(recruitSourceSchema),
+    }),
+    historicalOrdinals: z.object({
+      status: z.literal('ARCHIVAL_OR_SECONDARY_EVIDENCE'),
+      description: z.string(),
+      sources: z.array(recruitSourceSchema),
+    }),
+    receiptStatus: z.object({
+      publicHashReceiptRecorded: z.literal(false),
+      label: z.string(),
+      disclaimer: z.literal('This is not proof of zero commitment'),
+      explanation: z.string(),
+    }),
+    recruitmentScenarios: z.object({
+      usdPresets: z.array(z.number().positive()),
+    }),
+    claimReceiptUrl: z.string().url(),
   }),
   bossBattle: z.object({
     label: z.literal('SATIRICAL BOSS BATTLE'),

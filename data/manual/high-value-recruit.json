@@ -1,0 +1,64 @@
+{
+  "name": "Fred Krueger",
+  "publicSupport": {
+    "bip110SupportActive": true,
+    "profileLabel": "#BIP-110",
+    "spacesParticipation": "PUBLICLY VISIBLE",
+    "supportEvidence": [
+      {
+        "title": "Fred Krueger profile",
+        "url": "https://x.com/dotkrueger",
+        "kind": "PRIMARY PROFILE",
+        "confidence": "HIGH"
+      }
+    ]
+  },
+  "resumeScale": {
+    "tenExitsListed": true,
+    "aggregateExitValueUsd": 500000000,
+    "aggregateExitValueLabel": "Publicly reported aggregate startup exit value",
+    "liquidityDisclaimer": "Not a verified measure of personal liquid wealth",
+    "sources": [
+      {
+        "title": "Fred Krueger official site — ten exits",
+        "url": "https://fredkrueger.org/",
+        "kind": "PRIMARY",
+        "confidence": "HIGH"
+      },
+      {
+        "title": "Startup Cafe event biography — over $500M aggregate",
+        "url": "https://luma.com/StartUpCafeApr2",
+        "kind": "SECONDARY BIOGRAPHY",
+        "confidence": "MEDIUM"
+      }
+    ]
+  },
+  "stupidCoin": {
+    "present": true,
+    "label": "StupidCoin on Solana",
+    "description": "Publicly documented satirical meme-coin experiment",
+    "sources": [
+      {
+        "title": "Blockspace: Krueger’s weekend massacre",
+        "url": "https://newsletter.blockspacemedia.com/p/krueger-s-weekend-massacre",
+        "kind": "SECONDARY REPORTING",
+        "confidence": "MEDIUM"
+      }
+    ]
+  },
+  "historicalOrdinals": {
+    "status": "ARCHIVAL_OR_SECONDARY_EVIDENCE",
+    "description": "Historical association with Ordinals / BRC-20 discourse",
+    "sources": []
+  },
+  "receiptStatus": {
+    "publicHashReceiptRecorded": false,
+    "label": "No publicly verifiable hash-rate receipt recorded",
+    "disclaimer": "This is not proof of zero commitment",
+    "explanation": "It means the public dashboard currently has nothing to count."
+  },
+  "recruitmentScenarios": {
+    "usdPresets": [5000, 50000, 500000, 5000000]
+  },
+  "claimReceiptUrl": "https://github.com/btcpavao/bip110-war-chest/issues/new?title=Public%20hash-rate%20receipt&body=Please%20link%20the%20public%20receipt%20and%20describe%20the%20BIP-110%20hash-rate%20commitment."
+}

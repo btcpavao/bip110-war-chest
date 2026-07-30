@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.3",
+  "methodologyVersion": "2026-07-30.4",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T13:10:44.789973+00:00",
+  "generatedAt": "2026-07-30T13:36:43.467716+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T12:51:57.286Z",
-    "niceHashOrderBook": "2026-07-30T13:10:47.465461945Z",
-    "coinGecko": "2026-07-30T13:10:44.789973+00:00",
+    "bip110Monitor": "2026-07-30T13:29:55.073Z",
+    "niceHashOrderBook": "2026-07-30T13:36:43.489851770Z",
+    "coinGecko": "2026-07-30T13:36:43.467716+00:00",
     "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
-  "pipelineCommitSha": "5c7d804cffde90b578d06abfbef15dec27b97387",
+  "pipelineCommitSha": "480e051b5a206151b284b088d8fa119d7412399e",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -68,8 +68,8 @@
     "observedTransactionFeesSats": 179118822
   },
   "currentPrice": {
-    "usd": 64812,
-    "timestamp": "2026-07-30T13:10:44.789973+00:00",
+    "usd": 64662,
+    "timestamp": "2026-07-30T13:36:43.467716+00:00",
     "label": "Current value of historical BTC amount"
   },
   "battleClock": {
@@ -87,14 +87,83 @@
   },
   "hashpriceReference": {
     "btcPerPhDay": 0.0005229276623485986,
-    "usdPerPhDay": 33.89198765213737,
+    "usdPerPhDay": 33.81354850278508,
     "averageBlockRewardSats": 314346585.7938144,
     "rewardSampleBlocks": 97,
     "networkEhS": 906.0262573697337,
     "blockIntervalSeconds": 573.2447552447552,
-    "timestamp": "2026-07-30T13:10:44.789973+00:00",
+    "timestamp": "2026-07-30T13:36:43.467716+00:00",
     "confidence": "MEDIUM",
     "note": "Current theoretical miner revenue floor derived from up to the latest 144 observed BIP-110 signaling-block rewards, seven-day network hash rate and the rolling 144-block interval. It is not a rental quote."
+  },
+  "highValueRecruit": {
+    "name": "Fred Krueger",
+    "publicSupport": {
+      "bip110SupportActive": true,
+      "profileLabel": "#BIP-110",
+      "spacesParticipation": "PUBLICLY VISIBLE",
+      "supportEvidence": [
+        {
+          "title": "Fred Krueger profile",
+          "url": "https://x.com/dotkrueger",
+          "kind": "PRIMARY PROFILE",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "resumeScale": {
+      "tenExitsListed": true,
+      "aggregateExitValueUsd": 500000000,
+      "aggregateExitValueLabel": "Publicly reported aggregate startup exit value",
+      "liquidityDisclaimer": "Not a verified measure of personal liquid wealth",
+      "sources": [
+        {
+          "title": "Fred Krueger official site — ten exits",
+          "url": "https://fredkrueger.org/",
+          "kind": "PRIMARY",
+          "confidence": "HIGH"
+        },
+        {
+          "title": "Startup Cafe event biography — over $500M aggregate",
+          "url": "https://luma.com/StartUpCafeApr2",
+          "kind": "SECONDARY BIOGRAPHY",
+          "confidence": "MEDIUM"
+        }
+      ]
+    },
+    "stupidCoin": {
+      "present": true,
+      "label": "StupidCoin on Solana",
+      "description": "Publicly documented satirical meme-coin experiment",
+      "sources": [
+        {
+          "title": "Blockspace: Krueger’s weekend massacre",
+          "url": "https://newsletter.blockspacemedia.com/p/krueger-s-weekend-massacre",
+          "kind": "SECONDARY REPORTING",
+          "confidence": "MEDIUM"
+        }
+      ]
+    },
+    "historicalOrdinals": {
+      "status": "ARCHIVAL_OR_SECONDARY_EVIDENCE",
+      "description": "Historical association with Ordinals / BRC-20 discourse",
+      "sources": []
+    },
+    "receiptStatus": {
+      "publicHashReceiptRecorded": false,
+      "label": "No publicly verifiable hash-rate receipt recorded",
+      "disclaimer": "This is not proof of zero commitment",
+      "explanation": "It means the public dashboard currently has nothing to count."
+    },
+    "recruitmentScenarios": {
+      "usdPresets": [
+        5000,
+        50000,
+        500000,
+        5000000
+      ]
+    },
+    "claimReceiptUrl": "https://github.com/btcpavao/bip110-war-chest/issues/new?title=Public%20hash-rate%20receipt&body=Please%20link%20the%20public%20receipt%20and%20describe%20the%20BIP-110%20hash-rate%20commitment."
   },
   "bossBattle": {
     "label": "SATIRICAL BOSS BATTLE",
@@ -123,11 +192,11 @@
     },
     "costScenarios": {
       "hashpriceFloorBtcPerPhDay": 0.0005229276623485986,
-      "hashpriceFloorUsdPerPhDay": 33.89198765213737,
+      "hashpriceFloorUsdPerPhDay": 33.81354850278508,
       "kratterLossRate": 0.08,
       "marketRentalQuoteAvailable": true,
-      "marketBaseBtcPerEhDay": 0.5064,
-      "nicehashVisibleSpeedEhS": 16.85111197,
+      "marketBaseBtcPerEhDay": 0.5065,
+      "nicehashVisibleSpeedEhS": 16.59755257,
       "marketDepthVerified": false,
       "marketDepthSufficientByVisibleSpeed": false
     }
@@ -135,20 +204,20 @@
   "marketEstimate": {
     "label": "MARKET ESTIMATE",
     "available": true,
-    "lowSats": 32278244679,
-    "baseSats": 33021622435,
-    "highSats": 33021622435,
-    "lowSatsPerEhDay": 49500000,
-    "baseSatsPerEhDay": 50640000,
-    "highSatsPerEhDay": 50640000,
+    "lowSats": 32519516407,
+    "baseSats": 33028143292,
+    "highSats": 33028143292,
+    "lowSatsPerEhDay": 49870000,
+    "baseSatsPerEhDay": 50650000,
+    "highSatsPerEhDay": 50650000,
     "coveragePct": 100,
     "confidence": "MEDIUM",
     "source": "NiceHash public SHA256AsicBoost order book",
     "algorithm": "SHA256AsicBoost",
-    "asOf": "2026-07-30T13:10:47.465461945Z",
-    "totalSpeedEhS": 16.85111197,
-    "activePaidOrderCount": 632,
-    "snapshotCount": 2,
+    "asOf": "2026-07-30T13:36:43.489851770Z",
+    "totalSpeedEhS": 16.59755257,
+    "activePaidOrderCount": 623,
+    "snapshotCount": 3,
     "reason": "Current NiceHash SHA256AsicBoost paying-speed-weighted spot quote applied to the observed signal EH-day footprint as a replacement-cost benchmark. It is not claimed as the historical invoice."
   },
   "kratterScenario": {
@@ -160,9 +229,9 @@
       "modeledLossSats": 2651445115
     },
     "marketRentalModel": {
-      "estimatedRentalCostSats": 33021622435,
-      "modeledLossSats": 2641729795,
-      "modeledPostMiningValueSats": 30379892640
+      "estimatedRentalCostSats": 33028143292,
+      "modeledLossSats": 2642251463,
+      "modeledPostMiningValueSats": 30385891829
     }
   },
   "periods": [
@@ -393,16 +462,16 @@
     "agrees": true,
     "data": {
       "bip": "110",
-      "tip": 960259,
-      "chainTip": 960259,
+      "tip": 960260,
+      "chainTip": 960260,
       "periodNum": 476,
       "periodStart": 959616,
       "periodEnd": 961631,
-      "totalBlocks": 644,
+      "totalBlocks": 645,
       "signalingCount": 13,
       "pct": 2.02,
       "synced": true,
-      "updatedAt": "2026-07-30T12:51:57.286Z",
+      "updatedAt": "2026-07-30T13:29:55.073Z",
       "periods": [
         {
           "periodNum": 465,

@@ -8,12 +8,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from pipeline.io import read_json
-from pipeline.models import DatasetEnvelope, Receipt, SignalingBlock
+from pipeline.models import DatasetEnvelope, HighValueRecruit, Receipt, SignalingBlock
 
 
 def main() -> None:
     dashboard = read_json(ROOT / "public" / "data" / "dashboard.json")
     DatasetEnvelope.model_validate(dashboard)
+    HighValueRecruit.model_validate(dashboard["highValueRecruit"])
     blocks = read_json(ROOT / "public" / "data" / "signaling-blocks.json")
     parsed_blocks = [SignalingBlock.model_validate(item) for item in blocks["records"]]
     heights = [item.height for item in parsed_blocks]

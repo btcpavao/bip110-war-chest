@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.3",
+  "methodologyVersion": "2026-07-30.4",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T13:10:44.789973+00:00",
+  "generatedAt": "2026-07-30T13:36:43.467716+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T12:51:57.286Z",
-    "niceHashOrderBook": "2026-07-30T13:10:47.465461945Z",
-    "coinGecko": "2026-07-30T13:10:44.789973+00:00",
+    "bip110Monitor": "2026-07-30T13:29:55.073Z",
+    "niceHashOrderBook": "2026-07-30T13:36:43.489851770Z",
+    "coinGecko": "2026-07-30T13:36:43.467716+00:00",
     "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
-  "pipelineCommitSha": "5c7d804cffde90b578d06abfbef15dec27b97387",
+  "pipelineCommitSha": "480e051b5a206151b284b088d8fa119d7412399e",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -37,7 +37,10 @@
     "battleEta": "blocks remaining × rolling 144-block interval",
     "bossHashrate": "7d BIP-110 signal share × 7d average network EH/s",
     "reinforcementGap": "max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)",
-    "hashpriceReference": "blocks/day × average block reward ÷ network PH/s"
+    "hashpriceReference": "blocks/day × average block reward ÷ network PH/s",
+    "recruitFloorEhDays": "commitment BTC ÷ (hashprice BTC/PH/day × 1,000)",
+    "recruitMarketEhDays": "commitment BTC ÷ current NiceHash BTC/EH/day",
+    "recruitGapClosure": "scenario EH/s ÷ current F2Pool reinforcement gap"
   },
   "disclaimers": [
     "Signaling does not prove filtering.",
@@ -52,6 +55,8 @@
     "Exact historical miner P&L is not directly observable.",
     "Missing evidence must not be treated as zero.",
     "F2Pool comparison uses a rolling public seven-day pool estimate.",
-    "Visible NiceHash speed is not proof that reinforcement market depth is sufficient."
+    "Visible NiceHash speed is not proof that reinforcement market depth is sufficient.",
+    "The recruit simulator is not a claim about Fred Krueger's personal wealth or spending.",
+    "No public hash-rate receipt recorded is not proof of zero commitment."
   ]
 }

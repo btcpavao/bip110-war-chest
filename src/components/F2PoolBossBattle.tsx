@@ -58,6 +58,9 @@ export function F2PoolBossBattle(props: F2PoolBossBattleProps) {
         </a>
       </Card>
       <ReinforcementCalculator {...props} />
+      <a className="reinforcement-recruit-link" href="#high-value-recruit">
+        Need reinforcements? Meet the High-Value Recruit <span>↓</span>
+      </a>
     </section>
   )
 }

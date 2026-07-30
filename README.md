@@ -66,6 +66,9 @@ python scripts/update_all.py
 - [BIP-110 monitor](https://bip110monitor.com/api): period-level cross-check only. It is not used as the signaling classifier.
 - [NiceHash public order-book API](https://www.nicehash.com/docs/rest/get-main-api-v2-hashpower-orderBook): live `SHA256AsicBoost` buyer orders and paid speed, quoted in BTC/EH/day without an API key.
 - [mempool.space seven-day pool hashrate](https://mempool.space/api/v1/mining/hashrate/pools/1w): the directly sourced F2Pool comparison window used by the boss-battle panel.
+- [Fred Krueger’s official site](https://fredkrueger.org/): primary source for the ten listed exits.
+- [Startup Cafe event biography](https://luma.com/StartUpCafeApr2): secondary public biography for the reported aggregate startup-exit figure exceeding $500 million.
+- [Blockspace reporting](https://newsletter.blockspacemedia.com/p/krueger-s-weekend-massacre): secondary source for the StupidCoin launch on Solana.
 - [CoinGecko API](https://www.coingecko.com/en/api): current BTC/USD when available. Current-price conversions are labeled “Current value of historical BTC amount.”
 - Manual public evidence in `data/manual/influencer-receipts.json`.
 
@@ -145,6 +148,27 @@ reinforcement gap = max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)
 ```
 
 The theoretical hashprice floor is derived from observed block rewards and network hash rate. It is an opportunity-cost reference, not a rental quote. The separate NiceHash output extrapolates the current spot quote, but visible speed is not treated as proof that enough market depth exists to fill the reinforcement gap.
+
+## High-value recruit dossier
+
+The Fred Krueger section is a satirical recruitment proposal, not a wealth estimate or accusation. Curated facts live in `data/manual/high-value-recruit.json` and are validated by Pydantic before being published in `dashboard.json`.
+
+The simulator keeps two economic references separate:
+
+```text
+hashprice opportunity-cost EH-days =
+  commitment BTC ÷ (hashprice BTC/PH/day × 1,000)
+
+current spot rental EH-days =
+  commitment BTC ÷ current NiceHash BTC/EH/day
+
+scenario EH/s = current spot rental EH-days ÷ campaign days
+F2Pool gap closure = scenario EH/s ÷ current reinforcement gap
+```
+
+The displayed `>$500M` number is labeled as a publicly reported aggregate startup-exit figure. It is not presented as Fred Krueger’s personal liquid wealth. The dashboard currently records no publicly verifiable hash-rate receipt attributed to Fred; this is explicitly not proof of zero commitment.
+
+Historical Ordinals/BRC-20 association remains labeled archival/secondary and publishes no evidence link until a stronger primary source is pinned.
 
 ## General Kratter 8% scenario
 

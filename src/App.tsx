@@ -39,6 +39,7 @@ import { CurrencyToggle } from './components/CurrencyToggle'
 import { BattleCountdown } from './components/BattleCountdown'
 import { F2PoolBossBattle } from './components/F2PoolBossBattle'
 import { HashVaporizer } from './components/HashVaporizer'
+import { HighValueRecruit } from './components/HighValueRecruit'
 import { LabelBadge, type DataLabel } from './components/LabelBadge'
 import { PSUFieldManual } from './components/PSUFieldManual'
 import { SignalLedger } from './components/SignalLedger'
@@ -76,6 +77,8 @@ const methodologyDisclaimers = [
   'PSU is a satirical comparison unit.',
   'Exact historical miner P&L is not directly observable.',
   'Missing evidence must not be treated as zero.',
+  'The Fred Krueger recruit simulator is not a claim about personal wealth, liquidity or actual spending.',
+  'No public hash-rate receipt recorded is not proof of zero commitment.',
 ]
 
 function LoadingState() {
@@ -469,6 +472,13 @@ function App() {
           psuAnnualUsd={dashboard.satire.annualPriceUsd}
           currency={currency}
         />
+        <HighValueRecruit
+          recruit={dashboard.highValueRecruit}
+          boss={dashboard.bossBattle}
+          clock={dashboard.battleClock}
+          bitcoinUsd={dashboard.currentPrice.usd}
+          psuAnnualUsd={dashboard.satire.annualPriceUsd}
+        />
         <HashVaporizer />
 
         <section className="section calculator-section" id="budget">
@@ -569,15 +579,18 @@ function App() {
             <div className="table-scroll">
               <table>
                 <thead>
-                  <tr><th>Promoter</th><th>Public receipt</th><th>Verified spend</th><th>Demonstrated loss</th><th>PSU</th><th>Evidence</th></tr>
+                  <tr><th>Promoter</th><th>Public support</th><th>Public receipt</th><th>Recruitment</th><th>Verified spend</th><th>Demonstrated loss</th><th>PSU</th><th>Evidence</th></tr>
                 </thead>
                 <tbody>
                   {receipts.entries.map((entry) => {
                     const noReceipt = entry.status === 'NO_PUBLIC_RECEIPT'
+                    const isFred = entry.name === dashboard.highValueRecruit.name
                     return (
                       <tr key={entry.name}>
                         <td><strong>{entry.name}</strong><span>{entry.title}</span></td>
+                        <td>{isFred ? <><strong className="ledger-active">ACTIVE</strong><span>#BIP-110</span></> : <span>Not tracked</span>}</td>
                         <td><LabelBadge label={noReceipt ? 'NO PUBLIC RECEIPT' : entry.status === 'VERIFIED_OR_PUBLICLY_RECONSTRUCTED' ? 'VERIFIED' : 'UNKNOWN'} /></td>
+                        <td>{isFred ? <><strong>HIGH-VALUE PROSPECT</strong><a href="#high-value-recruit">Open dossier ↓</a></> : <span>—</span>}</td>
                         <td>{noReceipt ? 'Not recorded' : entry.verifiedSpendBtc == null ? 'Unavailable' : `${entry.verifiedSpendBtc} BTC`}</td>
                         <td>{noReceipt ? 'Not recorded' : entry.maximumReportedInterimLossBtc == null ? 'Unavailable' : `${entry.maximumReportedInterimLossBtc} BTC`}</td>
                         <td>{entry.historicalPsuLoss == null ? 'Unavailable' : entry.historicalPsuLoss.toFixed(2)}</td>

@@ -84,6 +84,71 @@ class Receipt(BaseModel):
         return self
 
 
+class RecruitSource(BaseModel):
+    title: str
+    url: HttpUrl
+    kind: str
+    confidence: Literal["HIGH", "MEDIUM", "LOW"]
+
+
+class RecruitPublicSupport(BaseModel):
+    bip110SupportActive: bool
+    profileLabel: str
+    spacesParticipation: str
+    supportEvidence: list[RecruitSource]
+
+
+class RecruitResumeScale(BaseModel):
+    tenExitsListed: bool
+    aggregateExitValueUsd: int = Field(ge=0)
+    aggregateExitValueLabel: str
+    liquidityDisclaimer: str
+    sources: list[RecruitSource]
+
+
+class RecruitEpisode(BaseModel):
+    present: bool
+    label: str
+    description: str
+    sources: list[RecruitSource]
+
+
+class RecruitArchivalEvidence(BaseModel):
+    status: Literal["ARCHIVAL_OR_SECONDARY_EVIDENCE"]
+    description: str
+    sources: list[RecruitSource]
+
+
+class RecruitReceiptStatus(BaseModel):
+    publicHashReceiptRecorded: bool
+    label: str
+    disclaimer: str
+    explanation: str
+
+    @model_validator(mode="after")
+    def missing_receipt_is_not_zero(self) -> RecruitReceiptStatus:
+        if self.publicHashReceiptRecorded:
+            raise ValueError("Recruit dossier currently models the no-public-receipt state")
+        if self.disclaimer != "This is not proof of zero commitment":
+            raise ValueError("Recruit receipt disclaimer must preserve the required wording")
+        return self
+
+
+class RecruitScenarios(BaseModel):
+    usdPresets: list[int]
+
+
+class HighValueRecruit(BaseModel):
+    name: str
+    publicSupport: RecruitPublicSupport
+    resumeScale: RecruitResumeScale
+    stupidCoin: RecruitEpisode
+    historicalOrdinals: RecruitArchivalEvidence
+    receiptStatus: RecruitReceiptStatus
+    recruitmentScenarios: RecruitScenarios
+    claimReceiptUrl: HttpUrl
+
+
 class DatasetEnvelope(BaseModel):
     schemaVersion: str
     methodologyVersion: str

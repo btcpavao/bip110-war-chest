@@ -36,7 +36,7 @@ from pipeline.calculations import (
     weighted_quantile,
 )
 from pipeline.io import read_json, write_json_atomic
-from pipeline.models import Receipt
+from pipeline.models import HighValueRecruit, Receipt
 
 PUBLIC_DATA = ROOT / "public" / "data"
 MEMPOOL_API = "https://mempool.space/api"
@@ -169,6 +169,9 @@ def main() -> None:
     signaling_records: list[dict[str, Any]] = signal_payload["records"]
     receipts_payload = read_json(ROOT / "data" / "manual" / "influencer-receipts.json")
     receipts = [Receipt.model_validate(entry) for entry in receipts_payload["entries"]]
+    high_value_recruit = HighValueRecruit.model_validate(
+        read_json(ROOT / "data" / "manual" / "high-value-recruit.json")
+    )
 
     generated_at = datetime.now(UTC).isoformat()
     chain_tip = headers[-1]["height"]
@@ -385,7 +388,7 @@ def main() -> None:
 
     envelope = {
         "schemaVersion": "1.0.0",
-        "methodologyVersion": "2026-07-30.3",
+        "methodologyVersion": "2026-07-30.4",
         "rulesetVersion": rules["classifierVersion"],
         "generatedAt": generated_at,
         "chainTip": chain_tip,
@@ -438,6 +441,7 @@ def main() -> None:
         },
         "battleClock": battle_clock,
         "hashpriceReference": hashprice_reference,
+        "highValueRecruit": high_value_recruit.model_dump(mode="json"),
         "bossBattle": {
             "label": "SATIRICAL BOSS BATTLE",
             "comparisonWindow": "7d",
@@ -618,6 +622,9 @@ def main() -> None:
                 "bossHashrate": "7d BIP-110 signal share × 7d average network EH/s",
                 "reinforcementGap": "max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)",
                 "hashpriceReference": "blocks/day × average block reward ÷ network PH/s",
+                "recruitFloorEhDays": "commitment BTC ÷ (hashprice BTC/PH/day × 1,000)",
+                "recruitMarketEhDays": "commitment BTC ÷ current NiceHash BTC/EH/day",
+                "recruitGapClosure": "scenario EH/s ÷ current F2Pool reinforcement gap",
             },
             "disclaimers": [
                 "Signaling does not prove filtering.",
@@ -633,6 +640,8 @@ def main() -> None:
                 "Missing evidence must not be treated as zero.",
                 "F2Pool comparison uses a rolling public seven-day pool estimate.",
                 "Visible NiceHash speed is not proof that reinforcement market depth is sufficient.",
+                "The recruit simulator is not a claim about Fred Krueger's personal wealth or spending.",
+                "No public hash-rate receipt recorded is not proof of zero commitment.",
             ],
         },
     )
