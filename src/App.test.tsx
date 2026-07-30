@@ -14,6 +14,8 @@ import {
   estimateLiveMandatorySeconds,
   formatCountdownLabel,
   formatHumanDuration,
+  formatSimpleEh,
+  formatSimpleUsd,
   fredMatchDurationSeconds,
   mandatoryReadingWindowCopy,
   splitCountdown,
@@ -73,15 +75,17 @@ describe('scroll-story landing page', () => {
   })
 
   it('renders the simple F2Pool mission metrics', () => {
-    const { container } = render(<SimpleLanding data={appData()} />)
+    const data = appData()
+    const simple = data.dashboard.simpleView
+    const { container } = render(<SimpleLanding data={data} />)
     const mission = container.querySelector('.mission-panel')
     const view = within(mission as HTMLElement)
 
     expect(view.getByText('MATCH F2POOL')).toBeInTheDocument()
-    expect(view.getByText('19 EH/s')).toBeInTheDocument()
-    expect(view.getByText('142 EH/s')).toBeInTheDocument()
-    expect(view.getByText('123 EH/s still needed')).toBeInTheDocument()
-    expect(view.getByText('≈ $4.1M / day')).toBeInTheDocument()
+    expect(view.getByText(formatSimpleEh(simple.bip110SevenDayEhS))).toBeInTheDocument()
+    expect(view.getByText(formatSimpleEh(simple.f2poolSevenDayEhS))).toBeInTheDocument()
+    expect(view.getByText(formatSimpleEh(simple.reinforcementsNeededEhS, ' still needed'))).toBeInTheDocument()
+    expect(view.getByText(`≈ ${formatSimpleUsd(simple.matchF2PoolCostPerDayUsd)} / day`)).toBeInTheDocument()
   })
 
   it('updates the mandatory block countdown every second', () => {
@@ -208,13 +212,16 @@ describe('scroll-story landing page', () => {
   })
 
   it('puts the three KPIs in the after-action summary and keeps advanced routes linked', () => {
-    const { container } = render(<SimpleLanding data={appData()} />)
+    const data = appData()
+    const simple = data.dashboard.simpleView
+    const { container } = render(<SimpleLanding data={data} />)
     const summary = container.querySelector('.summary-panel')
     const methodology = container.querySelector('.methodology-panel')
 
     expect(summary?.querySelectorAll('.summary-numbers article')).toHaveLength(3)
-    expect(within(summary as HTMLElement).getByText('≈ $21.5M')).toBeInTheDocument()
-    expect(within(summary as HTMLElement).getByText('≈ $620K / day')).toBeInTheDocument()
+    expect(within(summary as HTMLElement).getByText(`≈ ${formatSimpleUsd(simple.fightCostSoFarUsd)}`)).toBeInTheDocument()
+    expect(within(summary as HTMLElement).getByText(`≈ ${formatSimpleUsd(simple.currentArmyCostPerDayUsd)} / day`)).toBeInTheDocument()
+    expect(within(summary as HTMLElement).getByText(`≈ ${formatSimpleUsd(simple.matchF2PoolCostPerDayUsd)} / day`)).toBeInTheDocument()
     expect(within(methodology as HTMLElement).getByRole('link', { name: 'FULL METHODOLOGY' })).toHaveAttribute('href', '?view=methodology')
     expect(within(methodology as HTMLElement).getByRole('link', { name: 'BLOCK LEDGER' })).toHaveAttribute('href', '?view=ledger')
     expect(within(methodology as HTMLElement).getByRole('link', { name: 'RAW DATA' })).toHaveAttribute('href', expect.stringContaining('data/dashboard.json'))
