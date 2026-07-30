@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#201b14" />
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="%BASE_URL%assets/caricatures/general-kratter-hero-large.webp"
+      imagesrcset="%BASE_URL%assets/caricatures/general-kratter-hero-large-960.webp 960w, %BASE_URL%assets/caricatures/general-kratter-hero-large.webp 1402w"
+      imagesizes="(max-width: 760px) 100vw, 58vw"
+    />
     <meta
       name="description"
       content="A reproducible BIP-110 signaling, market-cost and public-receipts dashboard."
@@ -13,7 +21,7 @@
       property="og:description"
       content="The chain records blocks. The dashboard records receipts."
     />
-    <meta property="og:image" content="./og.png" />
+    <meta property="og:image" content="%BASE_URL%og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <title>BIP-110 War Chest</title>
   </head>

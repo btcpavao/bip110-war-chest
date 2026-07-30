@@ -1,24 +1,21 @@
 import {
   ArrowDown,
-  BookOpen,
   ChevronDown,
-  CircleDollarSign,
-  Clock3,
   Coins,
-  Cpu,
   ExternalLink,
-  Megaphone,
   Receipt,
-  RotateCcw,
-  Scale,
   Share2,
-  ShieldAlert,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import { BrandMark } from './components/BrandMark'
+import { EditorialIllustration } from './components/EditorialIllustration'
+import { FabiansTooltip } from './components/FabiansTooltip'
+import { PlebClassCard } from './components/PlebClassCard'
 import { SignalLedger } from './components/SignalLedger'
 import type { AppData } from './lib/loadData'
 import { loadAppData } from './lib/loadData'
+import { assetUrl, routeFromPathname } from './lib/paths'
 import {
   buildPlebShareText,
   estimateLiveMandatorySeconds,
@@ -31,12 +28,9 @@ import {
   mandatoryReadingWindowCopy,
   splitCountdown,
 } from './lib/simple'
+import { FabiansPage } from './pages/FabiansPage'
 
 const REPOSITORY_URL = 'https://github.com/btcpavao/bip110-war-chest'
-
-function assetUrl(path: string): string {
-  return `${import.meta.env.BASE_URL}${path}`
-}
 
 function LoadingState() {
   return (
@@ -63,7 +57,7 @@ function SecondaryHeader({ title }: { title: string }) {
   return (
     <header className="secondary-header">
       <a className="wordmark" href={import.meta.env.BASE_URL}>
-        <span>₿</span> WAR CHEST
+        <BrandMark /> WAR CHEST
       </a>
       <strong>{title}</strong>
       <a href={import.meta.env.BASE_URL}>BACK TO LANDING PAGE</a>
@@ -146,6 +140,11 @@ export function SimpleLanding({ data }: { data: AppData }) {
   const { dashboard } = data
   const simple = dashboard.simpleView
   const recruit = dashboard.highValueRecruit
+  const psuAnnualPriceUsd = dashboard.satire.annualPriceUsd
+  const formattedPsuAnnualPriceUsd = psuAnnualPriceUsd.toLocaleString('en-US', {
+    maximumFractionDigits: 0,
+  })
+  const [heroImageMissing, setHeroImageMissing] = useState(false)
   const [fredCommitment, setFredCommitment] = useState(simple.fredCommitmentOptionsUsd[0])
   const [recruitmentStatus, setRecruitmentStatus] = useState('')
   const [liveMandatorySeconds, setLiveMandatorySeconds] = useState(() => (
@@ -208,7 +207,7 @@ export function SimpleLanding({ data }: { data: AppData }) {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <a className="wordmark" href="#top"><span>₿</span> WAR CHEST</a>
+        <a className="wordmark" href="#top"><BrandMark /> WAR CHEST</a>
         <nav aria-label="Primary">
           <a href="#kratter">KRATTER</a>
           <a href="#risk">THE RISK</a>
@@ -227,20 +226,49 @@ export function SimpleLanding({ data }: { data: AppData }) {
         <section className="story-panel hero-story" aria-labelledby="hero-title">
           <div className="hero-story-copy">
             <p className="eyebrow">Public hashpower field report</p>
-            <h1 id="hero-title">GENERAL KRATTER CALLED THE PLEBS TO WAR</h1>
+            <h1 id="hero-title">
+              <span className="hero-title-line">GENERAL KRATTER</span>{' '}
+              <span className="hero-title-line">CALLED THE PLEBS</span>{' '}
+              <span className="hero-title-line">TO WAR</span>
+            </h1>
             <blockquote>
-              Rent hash rate. Rug the spammers. Defend the network. Fight the Fabians.
+              <span>Rent hash rate. Rug the spammers.</span>
+              <span>
+                Defend the network. Fight the{' '}
+                <FabiansTooltip pagePath={dashboard.satire.fabians.pagePath} />.
+              </span>
             </blockquote>
           </div>
-          <img
-            className="hero-story-art"
-            src={assetUrl('assets/caricatures/general-kratter-hero-v2.webp')}
-            alt="General Kratter directing marching plebs and Bitcoin miners into battle"
-          />
+          <div className="hero-story-visual">
+            {heroImageMissing ? (
+              <div
+                className="hero-story-fallback"
+                role="img"
+                aria-label="General Kratter battlefield illustration unavailable"
+              >
+                <span>Field illustration unavailable</span>
+                <strong>GENERAL KRATTER’S ORDERS REMAIN ON FILE</strong>
+              </div>
+            ) : (
+              <img
+                className="hero-story-art"
+                src={assetUrl('assets/caricatures/general-kratter-hero-large.webp')}
+                srcSet={`${assetUrl('assets/caricatures/general-kratter-hero-large-960.webp')} 960w, ${assetUrl('assets/caricatures/general-kratter-hero-large.webp')} 1402w`}
+                sizes="(max-width: 760px) 100vw, 58vw"
+                alt="Satirical illustration of General Kratter pointing a marching pleb army toward a Bitcoin mining battlefield."
+                width={1402}
+                height={1122}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                onError={() => setHeroImageMissing(true)}
+              />
+            )}
+          </div>
           <div className="hero-story-footer">
             <p>Naturally, we opened the ledger.</p>
-            <a href="#kratter">
-              Continue <ArrowDown size={18} aria-hidden="true" />
+            <a href="#kratter" aria-label="Continue to the General’s commitment">
+              CONTINUE <ArrowDown size={18} aria-hidden="true" />
             </a>
           </div>
         </section>
@@ -255,6 +283,14 @@ export function SimpleLanding({ data }: { data: AppData }) {
             <small className="data-note">
               Historical daily-price conversion pinned to {simple.historicalKratter.priceDate ?? 'an unavailable date'}.
               Exact execution time remains unverified.
+              <a
+                href="https://youtu.be/0qIIMD9ZMz8?si=iSm7UTsftIqBqmkf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Archival footage: the General mobilizes the plebs
+                <ExternalLink size={12} aria-hidden="true" />
+              </a>
             </small>
           </div>
           <figure className="commitment-visual">
@@ -269,41 +305,68 @@ export function SimpleLanding({ data }: { data: AppData }) {
           </figure>
         </section>
 
-        <section className="story-panel loss-panel" aria-labelledby="loss-title">
-          <figure className="loss-art">
-            <img
-              src={assetUrl('assets/caricatures/kratter-scale.webp')}
-              alt="General Kratter beside a satirical financial balance scale"
-            />
-          </figure>
+        <section className="story-panel loss-panel" id="kratter-loss" aria-labelledby="loss-title">
+          <EditorialIllustration
+            className="loss-illustration"
+            src={assetUrl('assets/caricatures/general-returned-from-battle.webp')}
+            alt="Satirical illustration of General Kratter displaying a roughly $600 battlefield-loss receipt while standing in front of a largely untouched Bitcoin reserve vault."
+            width={1672}
+            height={941}
+            fallbackLabel="The General Returned From Battle"
+          />
           <div className="story-copy">
             <p className="eyebrow">After-action report</p>
             <h2 id="loss-title">THE GENERAL RETURNED FROM BATTLE</h2>
             <strong className="story-number">≈ {formatSimpleUsd(simple.kratterMaximumLossUsd)} LOST</strong>
-            <div className="loss-scale" aria-label="Comparison of the general's reported loss and one Plebslop year">
+            <p className="story-support">
+              The general returned with cosmetic damage and most of the conviction reserves untouched.
+            </p>
+            <small className="data-note">
+              Based on the publicly reconstructed experiment and maximum reported interim loss.
+            </small>
+            <details className="satire-note">
+              <summary>ABOUT THE RESERVE VAULT</summary>
+              <p>
+                The reserve vault is satirical. The dashboard does not claim knowledge of Matthew Kratter’s total Bitcoin holdings.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section className="story-panel plebslop-panel" id="plebslop" aria-labelledby="plebslop-title">
+          <EditorialIllustration
+            className="plebslop-illustration"
+            src={assetUrl('assets/caricatures/plebslop-university.webp')}
+            alt="Satirical Plebslop University admissions scene where plebs pay $790 annual tuition while the professor’s reported BIP-110 campaign loss is shown as roughly $600."
+            width={1672}
+            height={941}
+            fallbackLabel="Plebslop University"
+          />
+          <div className="story-copy plebslop-copy">
+            <p className="eyebrow">Plebslop University admissions</p>
+            <h2 id="plebslop-title">ONE YEAR OF PLEBSLOP COSTS MORE THAN THE WAR</h2>
+            <div className="plebslop-comparison" aria-label="The general's reported loss compared with one year of Plebslop">
               <div>
-                <span>General’s battlefield loss</span>
+                <span>General’s reported loss</span>
                 <strong>≈ {formatSimpleUsd(simple.kratterMaximumLossUsd)}</strong>
               </div>
-              <Scale size={40} aria-hidden="true" />
-              <div className="is-heavier">
-                <span>1 year of Plebslop</span>
-                <strong>${simple.psuAnnualPriceUsd.toLocaleString('en-US')}</strong>
+              <div>
+                <span>One year of Plebslop</span>
+                <strong>${formattedPsuAnnualPriceUsd}</strong>
               </div>
             </div>
             <p className="psu-joke">
-              1 PSU = one ${simple.psuAnnualPriceUsd.toLocaleString('en-US')} annual Plebslop University subscription
+              1 PSU = one annual ${formattedPsuAnnualPriceUsd} Plebslop University subscription.
             </p>
-            <blockquote>The general did not complete one full academic year of financial sacrifice.</blockquote>
-            <p className="sub-punchline">
-              It costs more to hear the call to arms for one year than the general demonstrated losing in battle.
-            </p>
+            <blockquote>
+              The students paid more for the lecture than the professor demonstrated losing in the war.
+            </blockquote>
             <div className="loss-cta">
               <div>
                 <h3>FOLLOW THE GENERAL’S EXAMPLE</h3>
                 <p>It takes less than five minutes.</p>
               </div>
-              <a href={simple.rentHashRateUrl} target="_blank" rel="noreferrer">
+              <a href={dashboard.satire.rentHashRateUrl} target="_blank" rel="noreferrer">
                 RENT HASH RATE <ExternalLink size={15} />
               </a>
             </div>
@@ -322,40 +385,25 @@ export function SimpleLanding({ data }: { data: AppData }) {
             </p>
             <blockquote>At this stage, even the cannonballs are mostly refundable.</blockquote>
           </div>
-          <div className="cashback-machine" role="img" aria-label="A satirical machine returning most of a hash-rental payment as mining rewards">
-            <div className="machine-title">WAR WITH PARTIAL CASHBACK</div>
-            <div className="machine-input">
-              <CircleDollarSign size={42} />
-              <span>RENTAL COST</span>
-            </div>
-            <div className="machine-core">
-              <span>HASH</span>
-              <i />
-              <span>BLOCKS</span>
-            </div>
-            <div className="machine-output">
-              <div>
-                <RotateCcw size={34} />
-                <span>MINING REWARDS RETURN</span>
-              </div>
-              <div>
-                <Receipt size={30} />
-                <span>PREMIUM + VARIANCE</span>
-              </div>
-              <div>
-                <Coins size={28} />
-                <span>RUG THE SPAMMERS TAX</span>
-              </div>
-            </div>
-          </div>
+          <EditorialIllustration
+            className="cashback-illustration"
+            src={assetUrl('assets/caricatures/partial-cashback-v1.webp')}
+            alt="A satirical machine returning most of a hash-rental payment as mining rewards while premiums, variance and the spammer tax drain away"
+            width={1448}
+            height={1086}
+            fallbackLabel="War With Partial Cashback"
+          />
         </section>
 
         <section className="story-panel risk-panel" id="risk" aria-labelledby="risk-title">
-          <div className="risk-clock" aria-hidden="true">
-            <Clock3 size={72} />
-            <ShieldAlert size={42} />
-            <i />
-          </div>
+          <EditorialIllustration
+            className="risk-illustration"
+            src={assetUrl('assets/caricatures/mandatory-signaling-v1.webp')}
+            alt="A BIP-110 parade approaching a warning sign for mandatory signaling, minority-chain risk and orphan risk"
+            width={1448}
+            height={1086}
+            fallbackLabel="Mandatory Signaling Ahead"
+          />
           <div className="story-copy">
             <p className="eyebrow">Mandatory signaling countdown</p>
             <h2 id="risk-title">THE COSPLAY ENDS IN</h2>
@@ -462,25 +510,31 @@ export function SimpleLanding({ data }: { data: AppData }) {
         </section>
 
         <section className="story-panel fred-panel" id="fred" aria-labelledby="fred-title">
-          <div className="fred-visual">
-            <img
-              src={assetUrl('assets/caricatures/fred-krueger-recruit-v3.webp')}
-              alt="Fred Krueger with a microphone and an empty hashpower receipt"
+          <div className="fred-media">
+            <EditorialIllustration
+              className="fred-visual"
+              src={assetUrl('assets/caricatures/fred-speech-corps.webp')}
+              alt="Satirical illustration of Fred Krueger in the Speech Corps speaking into a microphone, holding an unfiled public hash-rental receipt beside a machine that fails to convert X Spaces rhetoric into SHA-256."
+              width={1448}
+              height={1086}
+              fallbackLabel="FRED SPEECH CORPS ILLUSTRATION UNAVAILABLE"
+              caption="Click to inspect the receipt. Current rank: Speech Corps. Promotion requirement: one public hashpower receipt."
             />
-            <p>He launched a Solana meme coin in seconds. Surely he can launch one hashpower order.</p>
+            <p className="fred-punchline">He launched a Solana meme coin in seconds. Surely he can launch one hashpower order.</p>
+            <span className="fred-rhetoric">Rhetoric is not SHA-256 compatible.</span>
           </div>
           <div className="fred-story">
             <p className="eyebrow">High-value recruit</p>
             <h2 id="fred-title">FRED, WE FOUND YOUR SIDE QUEST</h2>
             <div className="fred-facts">
               <article>
-                <span>Publicly reported aggregate startup exit value</span>
                 <strong>$500M+</strong>
+                <span>Publicly reported aggregate startup exit value</span>
                 <small>Not a measure of personal liquid wealth.</small>
               </article>
               <article>
-                <span>Public hash-rental receipt</span>
                 <strong>NOT RECORDED</strong>
+                <span>Public hash-rental receipt</span>
                 <small>This does not prove zero commitment. It means the public ledger has nothing to count.</small>
               </article>
             </div>
@@ -508,13 +562,20 @@ export function SimpleLanding({ data }: { data: AppData }) {
             <a className="fred-cta" href={recruit.claimReceiptUrl} target="_blank" rel="noreferrer">
               <Receipt size={18} /> FRED, CLAIM YOUR RECEIPT
             </a>
+            <small className="fred-cta-note">Public evidence will be added whether it helps or hurts the satire.</small>
             <details className="why-fred">
               <summary>WHY FRED? <ChevronDown size={17} /></summary>
               <div>
                 <p><strong>Public support:</strong> {recruit.publicSupport.profileLabel}; publicly visible.</p>
-                <p><strong>Resume:</strong> Ten exits listed on his official site.</p>
+                <p>
+                  <strong>Résumé:</strong> Ten exits listed on his official site; $500M+ publicly reported aggregate exit value.
+                  {' '}{recruit.resumeScale.liquidityDisclaimer}.
+                </p>
                 <p><strong>StupidCoin:</strong> {recruit.stupidCoin.description}.</p>
                 <p><strong>Former Ordinals enjoyer:</strong> Historical association; archival or secondary evidence only.</p>
+                <p className="fred-methodology-note">
+                  The Speech Corps, Hash Cavalry and SHA-256 converter are satirical. The receipt status refers only to publicly verifiable evidence recorded by this dashboard.
+                </p>
                 {[...recruit.publicSupport.supportEvidence, ...recruit.resumeScale.sources, ...recruit.stupidCoin.sources].map((source) => (
                   <a key={source.url} href={source.url} target="_blank" rel="noreferrer">
                     {source.title} · {source.kind} · {source.confidence}
@@ -535,82 +596,101 @@ export function SimpleLanding({ data }: { data: AppData }) {
           </header>
 
           <div className="pleb-paths">
-            <article className="pleb-path economist-path">
-              <span className="recommended-badge">RECOMMENDED</span>
-              <div className="pleb-path-icon" aria-hidden="true">
-                <BookOpen size={42} strokeWidth={1.7} />
-              </div>
-              <p className="pleb-path-label">THE ECONOMIST</p>
-              <h3>1. LEARN THE ECONOMICS FIRST</h3>
+            <PlebClassCard
+              className="economist-path"
+              imageSrc={assetUrl('assets/caricatures/pleb-economist.webp')}
+              imageAlt="Satirical illustration of an ordinary Bitcoin pleb reading Principles of Economics before deciding whether to join the BIP-110 campaign."
+              imageWidth={1122}
+              imageHeight={1402}
+              classLabel="THE ECONOMIST"
+              recommended
+              heading="1. LEARN THE ECONOMICS FIRST"
+              primaryAction={(
+                <a
+                  className="pleb-cta"
+                  href="https://saifedean.com/poe"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Read Principles of Economics by Saifedean Ammous in a new tab"
+                >
+                  READ PRINCIPLES OF ECONOMICS <ExternalLink size={15} aria-hidden="true" />
+                </a>
+              )}
+            >
               <p className="pleb-dynamic-line">{readingWindowCopy}</p>
               <p>
                 Use the time to read <cite>Principles of Economics</cite> by Saifedean Ammous.
-                It may save you sats and several hundred hours of emergency X Spaces.
               </p>
               <blockquote>Learn opportunity cost before volunteering to demonstrate it.</blockquote>
-              <a
-                className="pleb-cta"
-                href="https://saifedean.com/poe"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Read Principles of Economics by Saifedean Ammous in a new tab"
-              >
-                READ PRINCIPLES OF ECONOMICS <ExternalLink size={15} aria-hidden="true" />
-              </a>
-              <small>Book information and free preview chapters.</small>
-            </article>
+            </PlebClassCard>
 
-            <article className="pleb-path hasher-path">
-              <div className="pleb-path-icon" aria-hidden="true">
-                <Cpu size={42} strokeWidth={1.7} />
-              </div>
-              <p className="pleb-path-label">THE HASHER</p>
-              <h3>2. STILL CONVINCED? RENT HASH RATE</h3>
-              <p>Finished the book—or heroically declined to open it? Then put measurable hash rate behind the slogans.</p>
+            <PlebClassCard
+              className="hasher-path"
+              imageSrc={assetUrl('assets/caricatures/pleb-hasher.webp')}
+              imageAlt="Satirical illustration of the same pleb pushing a rented-hash machine while holding a hash-rate rental receipt."
+              imageWidth={1122}
+              imageHeight={1402}
+              classLabel="THE HASHER"
+              heading="2. STILL CONVINCED? RENT HASH RATE"
+              primaryAction={(
+                <a
+                  className="pleb-cta"
+                  href={simple.rentHashRateUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Rent hash rate in a new tab"
+                >
+                  RENT HASH RATE <ExternalLink size={15} aria-hidden="true" />
+                </a>
+              )}
+              secondaryAction={(
+                <small>Hash-rate rentals can lose money. Commit only what you are prepared to lose.</small>
+              )}
+            >
+              <p>Finished the book—or heroically declined to open it? Put measurable hash rate behind the slogans.</p>
               <p className="pleb-dynamic-line">
                 <strong>{formatSimpleEh(simple.reinforcementsNeededEhS)}</strong> are still needed to match F2Pool.
               </p>
               <blockquote>Congratulations: your support has been upgraded from audible to measurable.</blockquote>
-              <a
-                className="pleb-cta"
-                href={simple.rentHashRateUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Rent hash rate in a new tab"
-              >
-                RENT HASH RATE <ExternalLink size={15} aria-hidden="true" />
-              </a>
-              <small>Hash-rate rentals can lose money. Commit only what you are prepared to lose.</small>
-            </article>
+            </PlebClassCard>
 
-            <article className="pleb-path recruiter-path">
-              <div className="pleb-path-icon" aria-hidden="true">
-                <Megaphone size={42} strokeWidth={1.7} />
-              </div>
-              <p className="pleb-path-label">THE RECRUITER</p>
-              <h3>3. RECRUIT YOUR FAVORITE GENERAL</h3>
+            <PlebClassCard
+              className="recruiter-path"
+              imageSrc={assetUrl('assets/caricatures/pleb-recruiter.webp')}
+              imageAlt="Satirical illustration of the same pleb using a megaphone and BIP-110 War Chest material to recruit wealthier campaign supporters."
+              imageWidth={1122}
+              imageHeight={1402}
+              classLabel="THE RECRUITER"
+              heading="3. RECRUIT YOUR FAVORITE GENERAL"
+              primaryAction={(
+                <button
+                  className="pleb-cta"
+                  type="button"
+                  onClick={recruitAGeneral}
+                  aria-label="Recruit a general by sharing this page"
+                >
+                  RECRUIT A GENERAL <Share2 size={16} aria-hidden="true" />
+                </button>
+              )}
+              secondaryAction={(
+                <a
+                  className="pleb-secondary-cta"
+                  href={recruit.claimReceiptUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Submit a public hash-rate receipt in a new tab"
+                >
+                  SUBMIT A PUBLIC RECEIPT <ExternalLink size={13} aria-hidden="true" />
+                </a>
+              )}
+              status={(
+                <p className="pleb-share-status" role="status" aria-live="polite">{recruitmentStatus}</p>
+              )}
+            >
               <p>Prefer to keep your own sats? Ask your favorite BIP-110 influencer how much hash rate they are personally funding.</p>
               <p className="pleb-dynamic-line">Every public receipt will be counted—especially the inconvenient ones.</p>
               <blockquote>Why spend your own sats when a general with a microphone may still be available?</blockquote>
-              <button
-                className="pleb-cta"
-                type="button"
-                onClick={recruitAGeneral}
-                aria-label="Recruit a general by sharing this page"
-              >
-                RECRUIT A GENERAL <Share2 size={16} aria-hidden="true" />
-              </button>
-              <a
-                className="pleb-secondary-cta"
-                href={recruit.claimReceiptUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Submit a public hash-rate receipt in a new tab"
-              >
-                SUBMIT A PUBLIC RECEIPT <ExternalLink size={13} aria-hidden="true" />
-              </a>
-              <p className="pleb-share-status" role="status" aria-live="polite">{recruitmentStatus}</p>
-            </article>
+            </PlebClassCard>
           </div>
 
           <blockquote className="pleb-plan-footer">
@@ -695,6 +775,11 @@ function App() {
 
   if (error) return <ErrorState message={error} />
   if (!data) return <LoadingState />
+
+  const route = routeFromPathname(window.location.pathname)
+  if (route === data.dashboard.satire.fabians.pagePath && data.dashboard.satire.fabians.enabled) {
+    return <FabiansPage data={data} />
+  }
 
   const view = new URLSearchParams(window.location.search).get('view')
   if (view === 'methodology') return <MethodologyPage data={data} />

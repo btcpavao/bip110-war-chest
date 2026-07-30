@@ -95,6 +95,16 @@ export const dashboardSchema = envelopeSchema.extend({
     rentHashRateUrl: z.string().url(),
     sourceUrl: z.string().optional(),
     sourceCheckedAt: z.string().optional(),
+    fabians: z.object({
+      enabled: z.boolean(),
+      pagePath: z.literal('/fabians'),
+      ministerName: z.literal('Dr. Pleb Kruse'),
+      ministerTitle: z.string(),
+      receiptStatus: z.literal('NO_PUBLIC_RECEIPT'),
+      receiptDisplayLabel: z.literal('NOT RECORDED'),
+      receiptDisclaimer: z.string(),
+      shareTextTemplate: z.string().includes('{currentPageUrl}'),
+    }),
     enabled: z.boolean(),
   }).passthrough(),
   summary: z.object({

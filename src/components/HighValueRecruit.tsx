@@ -80,8 +80,12 @@ function FredPortrait() {
       ) : (
         <img
           className="fred-portrait"
-          src={`${import.meta.env.BASE_URL}assets/caricatures/fred-krueger-recruit-v3.webp`}
-          alt="Editorial caricature of Fred Krueger holding a microphone and a blank hash-rate requisition form."
+          src={`${import.meta.env.BASE_URL}assets/caricatures/fred-speech-corps.webp`}
+          alt="Satirical illustration of Fred Krueger in the Speech Corps speaking into a microphone, holding an unfiled public hash-rental receipt beside a machine that fails to convert X Spaces rhetoric into SHA-256."
+          width={1448}
+          height={1086}
+          loading="lazy"
+          decoding="async"
           onError={() => setFailed(true)}
         />
       )}

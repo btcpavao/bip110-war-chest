@@ -51,6 +51,16 @@
     "rentHashRateUrl": "https://www.nicehash.com/my/marketplace",
     "sourceUrl": "",
     "sourceCheckedAt": "",
+    "fabians": {
+      "enabled": true,
+      "pagePath": "/fabians",
+      "ministerName": "Dr. Pleb Kruse",
+      "ministerTitle": "Secretary of Health, Fitness & Mitochondrial Warfare",
+      "receiptStatus": "NO_PUBLIC_RECEIPT",
+      "receiptDisplayLabel": "NOT RECORDED",
+      "receiptDisclaimer": "This does not prove that Dr. Pleb Kruse committed nothing. It means the public ledger currently has nothing to count.",
+      "shareTextTemplate": "Dr. Pleb Kruse, the Fabians have been spotted. Please report your BIP-110 hash-rate deployment and current mitochondrial readiness. {currentPageUrl}"
+    },
     "enabled": true
   },
   "summary": {

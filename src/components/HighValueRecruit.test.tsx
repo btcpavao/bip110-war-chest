@@ -41,7 +41,7 @@ describe('high-value recruit dossier', () => {
 
   it('shows the missing-artwork fallback without disabling the dossier', () => {
     renderRecruit()
-    fireEvent.error(screen.getByAltText('Editorial caricature of Fred Krueger holding a microphone and a blank hash-rate requisition form.'))
+    fireEvent.error(screen.getByAltText(/Fred Krueger in the Speech Corps speaking into a microphone/i))
     expect(screen.getByText('Fred caricature pending')).toBeTruthy()
     expect(screen.getByText('Convert Rhetoric to Hash Rate')).toBeTruthy()
   })
