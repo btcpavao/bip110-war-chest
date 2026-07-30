@@ -2,7 +2,7 @@
 
 > The chain records blocks. The dashboard records receipts.
 
-`BIP-110 War Chest` is a fully static React dashboard and reproducible Python data pipeline for tracking BIP-110 signaling, its implied hash-rate footprint, observable mining revenue, public promoter receipts, rental-market estimates and a deliberately satirical 8% scenario.
+`BIP-110 War Chest` is a fully static React dashboard and reproducible Python data pipeline for tracking BIP-110 signaling, its implied hash-rate footprint, observable mining revenue, public promoter receipts, rental-market estimates, a seven-day F2Pool comparison and a deliberately satirical 8% scenario.
 
 The visual treatment is an exaggerated nineteenth-century propaganda poster wrapped around a serious quantitative ledger. Numerical claims are never embedded in artwork.
 
@@ -65,6 +65,7 @@ python scripts/update_all.py
 - [mempool.space API](https://mempool.space/docs/api/rest): chain tip, block version, timestamp, difficulty, reward, fees, pool attribution and public block-template audit fields.
 - [BIP-110 monitor](https://bip110monitor.com/api): period-level cross-check only. It is not used as the signaling classifier.
 - [NiceHash public order-book API](https://www.nicehash.com/docs/rest/get-main-api-v2-hashpower-orderBook): live `SHA256AsicBoost` buyer orders and paid speed, quoted in BTC/EH/day without an API key.
+- [mempool.space seven-day pool hashrate](https://mempool.space/api/v1/mining/hashrate/pools/1w): the directly sourced F2Pool comparison window used by the boss-battle panel.
 - [CoinGecko API](https://www.coingecko.com/en/api): current BTC/USD when available. Current-price conversions are labeled “Current value of historical BTC amount.”
 - Manual public evidence in `data/manual/influencer-receipts.json`.
 
@@ -126,6 +127,24 @@ current replacement cost = signal EH-days × current sats/EH/day
 This is an observable current market benchmark, not a claim about what miners historically paid. Each scheduled run appends an aggregate snapshot to `data/nicehash-market-snapshots.json`, allowing a native history to accumulate from the first successful observation onward.
 
 No current quote is backfilled into earlier dates. If the live API is temporarily unavailable, the last stored snapshot may be displayed with reduced confidence and zero live-coverage status.
+
+## Battle clock and F2Pool comparison
+
+The battle clock uses fixed ruleset heights and the latest 144-block observed interval:
+
+```text
+blocks remaining = max(mandatory start − current height, 0)
+ETA = blocks remaining × rolling 144-block interval
+```
+
+The boss panel compares two seven-day estimates:
+
+```text
+BIP-110 EH/s = 7d signal share × 7d average network EH/s
+reinforcement gap = max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)
+```
+
+The theoretical hashprice floor is derived from observed block rewards and network hash rate. It is an opportunity-cost reference, not a rental quote. The separate NiceHash output extrapolates the current spot quote, but visible speed is not treated as proof that enough market depth exists to fill the reinforcement gap.
 
 ## General Kratter 8% scenario
 

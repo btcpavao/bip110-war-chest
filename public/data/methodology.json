@@ -1,16 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.2",
+  "methodologyVersion": "2026-07-30.3",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T12:44:31.007166+00:00",
+  "generatedAt": "2026-07-30T13:10:44.789973+00:00",
   "chainTip": 960256,
   "sourceFreshness": {
     "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
-    "bip110Monitor": "2026-07-30T11:14:55.120Z",
-    "niceHashOrderBook": "2026-07-30T12:44:21.078144995Z",
-    "coinGecko": "2026-07-30T12:44:31.007166+00:00"
+    "bip110Monitor": "2026-07-30T12:51:57.286Z",
+    "niceHashOrderBook": "2026-07-30T13:10:47.465461945Z",
+    "coinGecko": "2026-07-30T13:10:44.789973+00:00",
+    "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
-  "pipelineCommitSha": "8d59f5132c528394e5c4b3516f55948bb216ce09",
+  "pipelineCommitSha": "5c7d804cffde90b578d06abfbef15dec27b97387",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -20,7 +21,8 @@
     "monitorCrossCheck": 100,
     "rentalMarketPct": 100,
     "spamAuditBlockPct": 100.0,
-    "spamClassificationPct": 0
+    "spamClassificationPct": 0,
+    "bossBattlePct": 100
   },
   "formulas": {
     "signalDetection": "(version & 0xe0000000) === 0x20000000 && (version & (1 << 4)) !== 0",
@@ -31,7 +33,11 @@
     "spotReplacementCost": "signal EH-days × NiceHash paying-speed-weighted spot BTC/EH/day",
     "marketLoss": "current spot replacement cost × 0.08",
     "psu": "historical USD amount ÷ configured annual PSU price",
-    "filterTax": "min(BIP110-invalid missing fees, max(expected fees − actual fees, 0))"
+    "filterTax": "min(BIP110-invalid missing fees, max(expected fees − actual fees, 0))",
+    "battleEta": "blocks remaining × rolling 144-block interval",
+    "bossHashrate": "7d BIP-110 signal share × 7d average network EH/s",
+    "reinforcementGap": "max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)",
+    "hashpriceReference": "blocks/day × average block reward ÷ network PH/s"
   },
   "disclaimers": [
     "Signaling does not prove filtering.",
@@ -44,6 +50,8 @@
     "The Kratter 8% scenario is illustrative.",
     "PSU is a satirical comparison unit.",
     "Exact historical miner P&L is not directly observable.",
-    "Missing evidence must not be treated as zero."
+    "Missing evidence must not be treated as zero.",
+    "F2Pool comparison uses a rolling public seven-day pool estimate.",
+    "Visible NiceHash speed is not proof that reinforcement market depth is sufficient."
   ]
 }

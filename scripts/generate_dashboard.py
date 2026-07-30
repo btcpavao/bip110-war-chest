@@ -17,12 +17,17 @@ sys.path.insert(0, str(ROOT))
 
 from pipeline.calculations import (
     RentalPrice,
+    blocks_until,
+    boss_progress_pct,
     difficulty_period_start,
+    estimated_seconds_until,
+    hashprice_btc_per_ph_day,
     inclusive_block_count,
     kratter_market_model,
     kratter_revenue_model,
     network_hashrate_eh_s,
     one_signal_per_n,
+    reinforcement_gap_eh_s,
     rental_cost,
     sats_to_btc,
     signal_eh_days,
@@ -39,6 +44,8 @@ MONITOR_API = "https://bip110monitor.com/api"
 NICEHASH_ORDERBOOK_API = "https://api2.nicehash.com/main/api/v2/hashpower/orderBook"
 NICEHASH_ALGORITHM = "SHA256AsicBoost"
 NICEHASH_SNAPSHOTS = ROOT / "data" / "nicehash-market-snapshots.json"
+MEMPOOL_POOL_HASHRATE_API = f"{MEMPOOL_API}/v1/mining/hashrate/pools/1w"
+WANG_CHUN_QUOTE_URL = "https://x.com/satofishi/status/2024443832964686161"
 
 
 def commit_sha() -> str | None:
@@ -176,6 +183,7 @@ def main() -> None:
     signal_eh_days_total = sum(float(period["signalEhDays"]) for period in periods)
 
     monitor, monitor_error = fetch_optional_json(MONITOR_API)
+    pool_hashrates, pool_hashrates_error = fetch_optional_json(MEMPOOL_POOL_HASHRATE_API)
     current_price, current_price_error = fetch_optional_json(
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
     )
@@ -232,6 +240,108 @@ def main() -> None:
         if market_costs["baseSats"] is not None
         else (None, None)
     )
+
+    recent_clock_headers = headers[-144:]
+    rolling_interval_seconds = (
+        (recent_clock_headers[-1]["timestamp"] - recent_clock_headers[0]["timestamp"])
+        / max(len(recent_clock_headers) - 1, 1)
+    )
+    mandatory_start_height = int(rules["mandatorySignalingStartHeight"])
+    battle_blocks_remaining = blocks_until(chain_tip, mandatory_start_height)
+    battle_clock = {
+        "currentHeight": chain_tip,
+        "mandatoryStartHeight": mandatory_start_height,
+        "mandatoryEndHeight": int(rules["mandatorySignalingEndHeight"]),
+        "maximumLockInHeight": int(rules["maximumLockInHeight"]),
+        "maximumActivationHeight": int(rules["maximumActivationHeight"]),
+        "blocksRemaining": battle_blocks_remaining,
+        "rollingBlockIntervalSeconds": rolling_interval_seconds,
+        "rollingWindowBlocks": len(recent_clock_headers),
+        "estimatedSecondsRemaining": estimated_seconds_until(
+            battle_blocks_remaining, rolling_interval_seconds
+        ),
+        "etaConfidence": "MEDIUM",
+        "stage": (
+            "VOLUNTARY_SIGNALING"
+            if chain_tip < mandatory_start_height
+            else "MANDATORY_SIGNALING"
+        ),
+    }
+
+    boss_window_end = int(headers[-1]["timestamp"])
+    boss_window_start = boss_window_end - 7 * 86_400
+    boss_headers = [
+        block for block in headers if int(block["timestamp"]) >= boss_window_start
+    ]
+    boss_signal_count = sum(
+        1 for block in boss_headers if signals_bip110(int(block["version"]))
+    )
+    boss_network_eh_s = (
+        sum(network_hashrate_eh_s(float(block["difficulty"])) for block in boss_headers)
+        / len(boss_headers)
+    )
+    bip110_window_eh_s = (
+        boss_signal_count / len(boss_headers) * boss_network_eh_s
+    )
+    f2pool_row = next(
+        (
+            row
+            for row in (pool_hashrates or [])
+            if str(row.get("poolName", "")).lower() == "f2pool"
+        ),
+        None,
+    )
+    f2pool_window_eh_s = (
+        float(f2pool_row["avgHashrate"]) / 10**18 if f2pool_row else None
+    )
+    reinforcement_gap = (
+        reinforcement_gap_eh_s(bip110_window_eh_s, f2pool_window_eh_s)
+        if f2pool_window_eh_s is not None
+        else None
+    )
+    boss_progress = (
+        boss_progress_pct(bip110_window_eh_s, f2pool_window_eh_s)
+        if f2pool_window_eh_s is not None
+        else None
+    )
+    f2pool_source_timestamp = (
+        datetime.fromtimestamp(int(f2pool_row["timestamp"]), UTC).isoformat()
+        if f2pool_row and f2pool_row.get("timestamp")
+        else None
+    )
+
+    reward_sample = signaling_records[-144:]
+    average_block_reward_sats = (
+        sum(int(block["totalMiningRevenueSats"]) for block in reward_sample)
+        / len(reward_sample)
+    )
+    hashprice_btc = hashprice_btc_per_ph_day(
+        average_block_reward_sats,
+        boss_network_eh_s,
+        rolling_interval_seconds,
+    )
+    bitcoin_usd = (
+        current_price.get("bitcoin", {}).get("usd") if current_price else None
+    )
+    hashprice_reference = {
+        "btcPerPhDay": hashprice_btc,
+        "usdPerPhDay": (
+            hashprice_btc * float(bitcoin_usd)
+            if hashprice_btc is not None and bitcoin_usd is not None
+            else None
+        ),
+        "averageBlockRewardSats": average_block_reward_sats,
+        "rewardSampleBlocks": len(reward_sample),
+        "networkEhS": boss_network_eh_s,
+        "blockIntervalSeconds": rolling_interval_seconds,
+        "timestamp": generated_at,
+        "confidence": "MEDIUM",
+        "note": (
+            "Current theoretical miner revenue floor derived from up to the latest 144 "
+            "observed BIP-110 signaling-block rewards, seven-day network hash rate "
+            "and the rolling 144-block interval. It is not a rental quote."
+        ),
+    }
     warnings = [
         "NiceHash is a current spot replacement-cost benchmark. Applying its quote to "
         "historical signal EH-days is not evidence of a historical rental invoice."
@@ -253,6 +363,10 @@ def main() -> None:
     )
     if current_price_error:
         warnings.append(f"Current CoinGecko price unavailable: {current_price_error}")
+    if pool_hashrates_error:
+        warnings.append(
+            f"F2Pool seven-day public hashrate unavailable: {pool_hashrates_error}"
+        )
 
     spam_auditable = [
         block
@@ -271,7 +385,7 @@ def main() -> None:
 
     envelope = {
         "schemaVersion": "1.0.0",
-        "methodologyVersion": "2026-07-30.2",
+        "methodologyVersion": "2026-07-30.3",
         "rulesetVersion": rules["classifierVersion"],
         "generatedAt": generated_at,
         "chainTip": chain_tip,
@@ -280,6 +394,7 @@ def main() -> None:
             "bip110Monitor": monitor.get("updatedAt") if monitor else None,
             "niceHashOrderBook": latest_market.get("timestamp") if latest_market else None,
             "coinGecko": generated_at if current_price else None,
+            "f2PoolWindow": f2pool_source_timestamp,
         },
         "pipelineCommitSha": commit_sha(),
         "warnings": warnings,
@@ -289,6 +404,7 @@ def main() -> None:
             "rentalMarketPct": 100 if is_live_market else 0,
             "spamAuditBlockPct": len(spam_auditable) / max(signal_count, 1) * 100,
             "spamClassificationPct": 0,
+            "bossBattlePct": 100 if f2pool_window_eh_s is not None else 50,
         },
     }
 
@@ -319,6 +435,56 @@ def main() -> None:
             "usd": current_price.get("bitcoin", {}).get("usd") if current_price else None,
             "timestamp": generated_at if current_price else None,
             "label": "Current value of historical BTC amount",
+        },
+        "battleClock": battle_clock,
+        "hashpriceReference": hashprice_reference,
+        "bossBattle": {
+            "label": "SATIRICAL BOSS BATTLE",
+            "comparisonWindow": "7d",
+            "windowStart": datetime.fromtimestamp(boss_window_start, UTC).isoformat(),
+            "windowEnd": datetime.fromtimestamp(boss_window_end, UTC).isoformat(),
+            "bip110WindowEhS": bip110_window_eh_s,
+            "bip110SignalBlocks": boss_signal_count,
+            "bip110ObservedBlocks": len(boss_headers),
+            "f2poolWindowEhS": f2pool_window_eh_s,
+            "f2poolSharePct": (
+                float(f2pool_row["share"]) * 100 if f2pool_row else None
+            ),
+            "reinforcementsRequiredEhS": reinforcement_gap,
+            "progressPct": boss_progress,
+            "sourceTimestamps": {
+                "bip110": datetime.fromtimestamp(boss_window_end, UTC).isoformat(),
+                "f2pool": f2pool_source_timestamp,
+            },
+            "sources": {
+                "bip110": f"{MEMPOOL_API}/v1/blocks",
+                "f2pool": MEMPOOL_POOL_HASHRATE_API,
+            },
+            "quote": {
+                "text": "No way we'll signal BIP-110.",
+                "sourceUrl": WANG_CHUN_QUOTE_URL,
+                "date": "2026-02-19",
+            },
+            "costScenarios": {
+                "hashpriceFloorBtcPerPhDay": hashprice_btc,
+                "hashpriceFloorUsdPerPhDay": hashprice_reference["usdPerPhDay"],
+                "kratterLossRate": 0.08,
+                "marketRentalQuoteAvailable": rental_available,
+                "marketBaseBtcPerEhDay": (
+                    float(latest_market["baseSatsPerEhDay"]) / 100_000_000
+                    if latest_market
+                    else None
+                ),
+                "nicehashVisibleSpeedEhS": (
+                    float(latest_market["totalSpeedEhS"]) if latest_market else None
+                ),
+                "marketDepthVerified": False,
+                "marketDepthSufficientByVisibleSpeed": (
+                    reinforcement_gap <= float(latest_market["totalSpeedEhS"])
+                    if reinforcement_gap is not None and latest_market
+                    else None
+                ),
+            },
         },
         "marketEstimate": {
             "label": "MARKET ESTIMATE",
@@ -448,6 +614,10 @@ def main() -> None:
                 "marketLoss": "current spot replacement cost × 0.08",
                 "psu": "historical USD amount ÷ configured annual PSU price",
                 "filterTax": "min(BIP110-invalid missing fees, max(expected fees − actual fees, 0))",
+                "battleEta": "blocks remaining × rolling 144-block interval",
+                "bossHashrate": "7d BIP-110 signal share × 7d average network EH/s",
+                "reinforcementGap": "max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)",
+                "hashpriceReference": "blocks/day × average block reward ÷ network PH/s",
             },
             "disclaimers": [
                 "Signaling does not prove filtering.",
@@ -461,6 +631,8 @@ def main() -> None:
                 "PSU is a satirical comparison unit.",
                 "Exact historical miner P&L is not directly observable.",
                 "Missing evidence must not be treated as zero.",
+                "F2Pool comparison uses a rolling public seven-day pool estimate.",
+                "Visible NiceHash speed is not proof that reinforcement market depth is sufficient.",
             ],
         },
     )

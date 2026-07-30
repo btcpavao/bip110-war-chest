@@ -36,10 +36,51 @@ def one_signal_per_n(total_blocks: int, signal_blocks: int) -> float | None:
     return total_blocks / signal_blocks
 
 
+def blocks_until(current_height: int, target_height: int) -> int:
+    return max(target_height - current_height, 0)
+
+
+def estimated_seconds_until(blocks: int, block_interval_seconds: float) -> int:
+    if blocks < 0:
+        raise ValueError("blocks cannot be negative")
+    if block_interval_seconds <= 0:
+        raise ValueError("block interval must be positive")
+    return round(blocks * block_interval_seconds)
+
+
+def reinforcement_gap_eh_s(bip110_eh_s: float, opponent_eh_s: float) -> float:
+    return max(opponent_eh_s - bip110_eh_s, 0.0)
+
+
+def boss_progress_pct(bip110_eh_s: float, opponent_eh_s: float) -> float | None:
+    if opponent_eh_s <= 0:
+        return None
+    return min(bip110_eh_s / opponent_eh_s * 100, 100.0)
+
+
 def network_hashrate_eh_s(difficulty: float) -> float:
     if difficulty < 0:
         raise ValueError("difficulty cannot be negative")
     return difficulty * (2**32) / EXPECTED_BLOCK_SECONDS / HASHES_PER_EH
+
+
+def hashprice_btc_per_ph_day(
+    average_block_reward_sats: float,
+    network_eh_s: float,
+    block_interval_seconds: float,
+) -> float | None:
+    if average_block_reward_sats < 0:
+        raise ValueError("average block reward cannot be negative")
+    if network_eh_s <= 0 or block_interval_seconds <= 0:
+        return None
+    blocks_per_day = 86_400 / block_interval_seconds
+    network_ph_s = network_eh_s * 1000
+    return (
+        blocks_per_day
+        * average_block_reward_sats
+        / SATOSHIS_PER_BTC
+        / network_ph_s
+    )
 
 
 def signal_eh_days(

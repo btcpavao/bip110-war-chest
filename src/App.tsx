@@ -36,7 +36,11 @@ import {
 } from 'recharts'
 import './App.css'
 import { CurrencyToggle } from './components/CurrencyToggle'
+import { BattleCountdown } from './components/BattleCountdown'
+import { F2PoolBossBattle } from './components/F2PoolBossBattle'
+import { HashVaporizer } from './components/HashVaporizer'
 import { LabelBadge, type DataLabel } from './components/LabelBadge'
+import { PSUFieldManual } from './components/PSUFieldManual'
 import { SignalLedger } from './components/SignalLedger'
 import { Card, CardContent, CardHeader } from './components/ui/card'
 import {
@@ -47,6 +51,7 @@ import {
   type Currency,
 } from './lib/format'
 import { loadAppData, type AppData } from './lib/loadData'
+import { formatBattleDuration, heroEstimateMode } from './lib/battle'
 
 const slogans = [
   'RUG THE SPAMMERS',
@@ -238,6 +243,8 @@ function App() {
     currency === 'BTC'
       ? 'Native BTC amount'
       : dashboard.currentPrice.label
+  const heroMode = heroEstimateMode(dashboard.marketEstimate.available)
+  const heroAmount = heroMode === 'market' ? display.marketBase : display.scenarioLoss
 
   return (
     <div className="site-shell">
@@ -248,13 +255,17 @@ function App() {
         </a>
         <nav aria-label="Primary">
           <a href="#score">Score</a>
+          <a href="#boss">Boss</a>
           <a href="#budget">Budget</a>
           <a href="#receipts">Receipts</a>
           <a href="#ledger">Blocks</a>
         </nav>
-        <div className="live-status">
+        <div className="topbar-clock">
           <span className="status-dot" />
-          Block {formatInteger(dashboard.chainTip)}
+          <div>
+            <strong>{formatInteger(dashboard.battleClock.blocksRemaining)} blocks</strong>
+            <small>{formatBattleDuration(dashboard.battleClock.estimatedSecondsRemaining)} to mandatory</small>
+          </div>
         </div>
       </header>
 
@@ -286,12 +297,16 @@ function App() {
                 <p className="eyebrow">Quartermaster’s estimate</p>
                 <h2>Estimated BIP-110 War Budget</h2>
               </div>
-              <LabelBadge label="MARKET ESTIMATE" />
+              <LabelBadge label={heroMode === 'market' ? 'MARKET ESTIMATE' : 'GENERAL KRATTER SCENARIO'} />
             </CardHeader>
             <CardContent>
               <CurrencyToggle value={currency} onChange={setCurrency} />
-              <strong className="hero-amount">{display.marketBase}</strong>
-              <p className="range-line">Low {display.marketLow} · High {display.marketHigh}</p>
+              <strong className="hero-amount">{heroAmount}</strong>
+              <p className="range-line">
+                {heroMode === 'market'
+                  ? `Low ${display.marketLow} · High ${display.marketHigh}`
+                  : 'Market unavailable · showing the explicit 8% revenue scenario'}
+              </p>
               <div className="availability-note">
                 {dashboard.marketEstimate.available ? <Gauge size={18} /> : <FileQuestion size={18} />}
                 <div>
@@ -390,6 +405,14 @@ function App() {
           </div>
         </section>
 
+        <PSUFieldManual
+          annualPriceUsd={dashboard.satire.annualPriceUsd}
+          sourceUrl={dashboard.satire.sourceUrl}
+          sourceCheckedAt={dashboard.satire.sourceCheckedAt}
+          historicalPsuLoss={kratter?.historicalPsuLoss ?? null}
+          currency={currency}
+        />
+
         <section className="section battlefield-section" id="score">
           <div className="section-heading split-heading">
             <div>
@@ -437,6 +460,16 @@ function App() {
             </CardContent>
           </Card>
         </section>
+
+        <BattleCountdown clock={dashboard.battleClock} />
+        <F2PoolBossBattle
+          battle={dashboard.bossBattle}
+          clock={dashboard.battleClock}
+          bitcoinUsd={dashboard.currentPrice.usd}
+          psuAnnualUsd={dashboard.satire.annualPriceUsd}
+          currency={currency}
+        />
+        <HashVaporizer />
 
         <section className="section calculator-section" id="budget">
           <div className="section-heading">
@@ -671,6 +704,9 @@ function App() {
                 <div><span>Market scenario</span><code>loss = spot replacement cost × 0.08</code></div>
                 <div><span>PSU</span><code>historical USD amount ÷ ${dashboard.satire.annualPriceUsd}</code></div>
                 <div><span>Filter tax</span><code>min(invalid missing fees, positive template fee gap)</code></div>
+                <div><span>Battle ETA</span><code>blocks remaining × rolling 144-block interval</code></div>
+                <div><span>Boss hash rate</span><code>7d signal share × 7d average network EH/s</code></div>
+                <div><span>Reinforcements</span><code>max(F2Pool 7d EH/s − BIP-110 7d EH/s, 0)</code></div>
               </div>
               <ol className="disclaimers-list">
                 {methodologyDisclaimers.map((item) => <li key={item}>{item}</li>)}
@@ -680,6 +716,7 @@ function App() {
                 <a href="https://mempool.space/docs/api/rest" target="_blank" rel="noreferrer">mempool.space API <ExternalLink size={13} /></a>
                 <a href="https://bip110monitor.com/api" target="_blank" rel="noreferrer">BIP-110 monitor API <ExternalLink size={13} /></a>
                 <a href="https://www.nicehash.com/docs/rest/get-main-api-v2-hashpower-orderBook" target="_blank" rel="noreferrer">NiceHash order-book API <ExternalLink size={13} /></a>
+                <a href={dashboard.bossBattle.sources.f2pool} target="_blank" rel="noreferrer">F2Pool seven-day estimate <ExternalLink size={13} /></a>
               </div>
             </Collapsible.Content>
           </Collapsible.Root>

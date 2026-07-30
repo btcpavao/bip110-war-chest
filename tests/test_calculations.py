@@ -1,12 +1,17 @@
 from pipeline.calculations import (
     RentalPrice,
+    blocks_until,
+    boss_progress_pct,
     difficulty_period_start,
+    estimated_seconds_until,
     estimated_net_filter_cost,
+    hashprice_btc_per_ph_day,
     inclusive_block_count,
     kratter_market_model,
     kratter_revenue_model,
     network_hashrate_eh_s,
     one_signal_per_n,
+    reinforcement_gap_eh_s,
     rental_cost,
     signal_eh_days,
     signals_bip110,
@@ -76,3 +81,20 @@ def test_filter_tax_cases() -> None:
     assert estimated_net_filter_cost(100, 150, 20) == 20
     assert estimated_net_filter_cost(130, 120, 20) == 0
     assert estimated_net_filter_cost(100, None, 20) is None
+
+
+def test_battle_clock_and_reinforcement_gap() -> None:
+    assert blocks_until(100, 125) == 25
+    assert blocks_until(130, 125) == 0
+    assert estimated_seconds_until(6, 600) == 3600
+    assert reinforcement_gap_eh_s(12.5, 100) == 87.5
+    assert reinforcement_gap_eh_s(100, 12.5) == 0
+    assert boss_progress_pct(25, 100) == 25
+    assert boss_progress_pct(25, 0) is None
+
+
+def test_hashprice_reference_formula() -> None:
+    # 144 blocks/day × 3.125 BTC divided across 1,000,000 PH/s.
+    result = hashprice_btc_per_ph_day(312_500_000, 1_000, 600)
+    assert result == 0.00045
+    assert hashprice_btc_per_ph_day(312_500_000, 0, 600) is None
