@@ -61,6 +61,15 @@ class Evidence(BaseModel):
     curatorNote: str
 
 
+class HistoricalPrice(BaseModel):
+    date: str
+    btcUsd: float = Field(gt=0)
+    granularity: Literal["daily", "hourly"]
+    sourceUrl: HttpUrl
+    confidence: Literal["HIGH", "MEDIUM", "LOW"]
+    note: str
+
+
 class Receipt(BaseModel):
     name: str
     title: str
@@ -68,6 +77,7 @@ class Receipt(BaseModel):
     maximumReportedInterimLossRate: float | None = Field(default=None, ge=0, le=1)
     maximumReportedInterimLossBtc: float | None = Field(default=None, ge=0)
     historicalUsdLoss: float | None = Field(default=None, ge=0)
+    historicalPrice: HistoricalPrice | None = None
     annualPsuSubscriptionUsd: float = Field(gt=0)
     evidence: list[Evidence]
     status: Literal[

@@ -39,7 +39,7 @@ export function F2PoolBossBattle(props: F2PoolBossBattleProps) {
         <Card className="boss-card">
           <img
             className="boss-portrait"
-            src={`${import.meta.env.BASE_URL}assets/caricatures/wang-chun-boss.webp`}
+            src={`${import.meta.env.BASE_URL}assets/caricatures/wang-chun-boss-v2.webp`}
             alt="Editorial caricature of Wang Chun in an astronaut suit representing the F2Pool boss comparison."
           />
           <div className="boss-card-copy">

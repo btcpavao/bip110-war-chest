@@ -8,6 +8,14 @@
       "maximumReportedInterimLossRate": 0.08,
       "maximumReportedInterimLossBtc": 0.008,
       "historicalUsdLoss": null,
+      "historicalPrice": {
+        "date": "2026-05-05",
+        "btcUsd": 79825.8751129579,
+        "granularity": "daily",
+        "sourceUrl": "https://api.coingecko.com/api/v3/coins/bitcoin/history?date=05-05-2026&localization=false",
+        "confidence": "LOW",
+        "note": "Approximation pinned to the public video date. The exact experiment execution time remains unverified."
+      },
       "annualPsuSubscriptionUsd": 790,
       "evidence": [
         {
@@ -30,6 +38,7 @@
       "maximumReportedInterimLossRate": null,
       "maximumReportedInterimLossBtc": null,
       "historicalUsdLoss": null,
+      "historicalPrice": null,
       "annualPsuSubscriptionUsd": 790,
       "evidence": [],
       "status": "NO_PUBLIC_RECEIPT",

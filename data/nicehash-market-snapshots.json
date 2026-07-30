@@ -40,6 +40,19 @@
       "activePaidOrderCount": 623,
       "quantiles": "payingSpeed-weighted P25 / P50 / P75",
       "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
+    },
+    {
+      "timestamp": "2026-07-30T13:57:09.359389935Z",
+      "algorithm": "SHA256AsicBoost",
+      "currency": "BTC",
+      "unit": "BTC/EH/day",
+      "lowSatsPerEhDay": 49520000,
+      "baseSatsPerEhDay": 50650000,
+      "highSatsPerEhDay": 50650000,
+      "totalSpeedEhS": 16.75046352,
+      "activePaidOrderCount": 620,
+      "quantiles": "payingSpeed-weighted P25 / P50 / P75",
+      "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
     }
   ]
 }

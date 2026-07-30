@@ -2,6 +2,7 @@
   "psuName": "Plebslop University Subscription",
   "psuShortName": "PSU",
   "annualPriceUsd": 790,
+  "rentHashRateUrl": "https://www.nicehash.com/my/marketplace",
   "sourceUrl": "",
   "sourceCheckedAt": "",
   "enabled": true

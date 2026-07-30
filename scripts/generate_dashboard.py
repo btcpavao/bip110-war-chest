@@ -388,7 +388,7 @@ def main() -> None:
 
     envelope = {
         "schemaVersion": "1.0.0",
-        "methodologyVersion": "2026-07-30.4",
+        "methodologyVersion": "2026-07-30.5",
         "rulesetVersion": rules["classifierVersion"],
         "generatedAt": generated_at,
         "chainTip": chain_tip,
@@ -408,6 +408,114 @@ def main() -> None:
             "spamAuditBlockPct": len(spam_auditable) / max(signal_count, 1) * 100,
             "spamClassificationPct": 0,
             "bossBattlePct": 100 if f2pool_window_eh_s is not None else 50,
+        },
+    }
+
+    kratter_receipt = next(
+        (receipt for receipt in receipts if receipt.name == "Matthew Kratter"),
+        None,
+    )
+    historical_btc_usd = (
+        kratter_receipt.historicalPrice.btcUsd
+        if kratter_receipt and kratter_receipt.historicalPrice
+        else None
+    )
+    market_btc_per_eh_day = (
+        float(latest_market["baseSatsPerEhDay"]) / 100_000_000
+        if latest_market
+        else None
+    )
+    current_army_cost_per_day_usd = (
+        bip110_window_eh_s * market_btc_per_eh_day * float(bitcoin_usd)
+        if market_btc_per_eh_day is not None and bitcoin_usd is not None
+        else None
+    )
+    match_f2pool_cost_per_day_usd = (
+        reinforcement_gap * market_btc_per_eh_day * float(bitcoin_usd)
+        if reinforcement_gap is not None
+        and market_btc_per_eh_day is not None
+        and bitcoin_usd is not None
+        else None
+    )
+    simple_view = {
+        "fightCostSoFarUsd": (
+            gross_spend_sats / 100_000_000 * float(bitcoin_usd)
+            if bitcoin_usd is not None
+            else None
+        ),
+        "currentArmyCostPerDayUsd": current_army_cost_per_day_usd,
+        "matchF2PoolCostPerDayUsd": match_f2pool_cost_per_day_usd,
+        "kratterCommittedUsd": (
+            kratter_receipt.verifiedSpendBtc * historical_btc_usd
+            if kratter_receipt
+            and kratter_receipt.verifiedSpendBtc is not None
+            and historical_btc_usd is not None
+            else None
+        ),
+        "kratterMaximumLossUsd": (
+            kratter_receipt.maximumReportedInterimLossBtc * historical_btc_usd
+            if kratter_receipt
+            and kratter_receipt.maximumReportedInterimLossBtc is not None
+            and historical_btc_usd is not None
+            else None
+        ),
+        "psuAnnualPriceUsd": float(satire["annualPriceUsd"]),
+        "secondsUntilMandatory": battle_clock["estimatedSecondsRemaining"],
+        "bip110SevenDayEhS": bip110_window_eh_s,
+        "f2poolSevenDayEhS": f2pool_window_eh_s,
+        "reinforcementsNeededEhS": reinforcement_gap,
+        "f2poolMatchedPct": boss_progress,
+        "fredCommitmentOptionsUsd": [50_000, 500_000, 5_000_000],
+        "rentHashRateUrl": satire["rentHashRateUrl"],
+        "historicalKratter": {
+            "priceDate": (
+                kratter_receipt.historicalPrice.date
+                if kratter_receipt and kratter_receipt.historicalPrice
+                else None
+            ),
+            "priceUsd": historical_btc_usd,
+            "sourceUrl": (
+                str(kratter_receipt.historicalPrice.sourceUrl)
+                if kratter_receipt and kratter_receipt.historicalPrice
+                else None
+            ),
+            "confidence": (
+                kratter_receipt.historicalPrice.confidence
+                if kratter_receipt and kratter_receipt.historicalPrice
+                else "UNKNOWN"
+            ),
+            "note": (
+                kratter_receipt.historicalPrice.note
+                if kratter_receipt and kratter_receipt.historicalPrice
+                else "Historical price unavailable."
+            ),
+        },
+        "metadata": {
+            "fightCostSoFarUsd": {
+                "label": "ILLUSTRATIVE 8% MODEL",
+                "confidence": "LOW",
+                "unavailableReason": (
+                    None if bitcoin_usd is not None else "Current BTC/USD price unavailable."
+                ),
+            },
+            "currentArmyCostPerDayUsd": {
+                "label": "CURRENT-PRICE ESTIMATE",
+                "confidence": "MEDIUM" if is_live_market else "LOW",
+                "unavailableReason": (
+                    None
+                    if current_army_cost_per_day_usd is not None
+                    else "Current hashpower price or BTC/USD price unavailable."
+                ),
+            },
+            "matchF2PoolCostPerDayUsd": {
+                "label": "THEORETICAL CURRENT-PRICE ESTIMATE",
+                "confidence": "LOW",
+                "unavailableReason": (
+                    None
+                    if match_f2pool_cost_per_day_usd is not None
+                    else "F2Pool gap, current hashpower price or BTC/USD price unavailable."
+                ),
+            },
         },
     }
 
@@ -440,6 +548,7 @@ def main() -> None:
             "label": "Current value of historical BTC amount",
         },
         "battleClock": battle_clock,
+        "simpleView": simple_view,
         "hashpriceReference": hashprice_reference,
         "highValueRecruit": high_value_recruit.model_dump(mode="json"),
         "bossBattle": {

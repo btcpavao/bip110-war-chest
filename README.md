@@ -10,9 +10,24 @@ The visual treatment is an exaggerated nineteenth-century propaganda poster wrap
 
 > No publicly verifiable receipt is not the same as zero financial commitment.
 
-## Screenshots
+## Public views
 
-After running the site locally, capture the hero, Battlefield Score and Signaling Block Ledger and add them under `docs/screenshots/`. The production Open Graph artwork is `public/og.png`.
+The primary landing page is intentionally short and USD-first:
+
+1. Hero
+2. General Kratter
+3. The Real Battle / F2Pool
+4. Fred Krueger
+5. Short methodology
+6. Closing panel
+
+Detailed formulas and the searchable signaling-block ledger remain available through
+the `?view=methodology` and `?view=ledger` secondary views. Raw JSON and CSV files
+remain public under `public/data`.
+
+The pipeline publishes the landing-page projection in `dashboard.json` as
+`simpleView`. It retains numeric unavailable states plus model labels, confidence
+and missing-data reasons even when the public page uses only a few rounded values.
 
 ## Stack
 

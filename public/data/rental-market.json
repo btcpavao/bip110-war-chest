@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "methodologyVersion": "2026-07-30.4",
+  "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-07-30T14:38:43.305488+00:00",
-  "chainTip": 960265,
+  "generatedAt": "2026-07-30T13:57:09.536510+00:00",
+  "chainTip": 960256,
   "sourceFreshness": {
-    "mempoolSpace": "2026-07-30T14:38:42.079358+00:00",
-    "bip110Monitor": "2026-07-30T14:37:55.073Z",
-    "niceHashOrderBook": "2026-07-30T14:38:44.012469337Z",
-    "coinGecko": "2026-07-30T14:38:43.305488+00:00",
+    "mempoolSpace": "2026-07-30T12:34:19.097945+00:00",
+    "bip110Monitor": "2026-07-30T13:51:55.102Z",
+    "niceHashOrderBook": "2026-07-30T13:57:09.359389935Z",
+    "coinGecko": "2026-07-30T13:57:09.536510+00:00",
     "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
   "pipelineCommitSha": "3af92f8ffe8e2563e04c685d7fa17e3aa0387814",
@@ -28,15 +28,15 @@
   "units": "sats/EH/day",
   "available": true,
   "currentSpot": {
-    "timestamp": "2026-07-30T14:38:44.012469337Z",
+    "timestamp": "2026-07-30T13:57:09.359389935Z",
     "algorithm": "SHA256AsicBoost",
     "currency": "BTC",
     "unit": "BTC/EH/day",
-    "lowSatsPerEhDay": 49810000,
+    "lowSatsPerEhDay": 49520000,
     "baseSatsPerEhDay": 50650000,
     "highSatsPerEhDay": 50650000,
-    "totalSpeedEhS": 16.95463156,
-    "activePaidOrderCount": 636,
+    "totalSpeedEhS": 16.75046352,
+    "activePaidOrderCount": 620,
     "quantiles": "payingSpeed-weighted P25 / P50 / P75",
     "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
   },
@@ -81,15 +81,15 @@
       "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
     },
     {
-      "timestamp": "2026-07-30T14:38:44.012469337Z",
+      "timestamp": "2026-07-30T13:57:09.359389935Z",
       "algorithm": "SHA256AsicBoost",
       "currency": "BTC",
       "unit": "BTC/EH/day",
-      "lowSatsPerEhDay": 49810000,
+      "lowSatsPerEhDay": 49520000,
       "baseSatsPerEhDay": 50650000,
       "highSatsPerEhDay": 50650000,
-      "totalSpeedEhS": 16.95463156,
-      "activePaidOrderCount": 636,
+      "totalSpeedEhS": 16.75046352,
+      "activePaidOrderCount": 620,
       "quantiles": "payingSpeed-weighted P25 / P50 / P75",
       "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
     }
