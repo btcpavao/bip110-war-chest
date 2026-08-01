@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-01T16:43:40.917113+00:00",
-  "chainTip": 960592,
+  "generatedAt": "2026-08-01T17:47:59.151683+00:00",
+  "chainTip": 960598,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-01T16:43:39.687161+00:00",
-    "bip110Monitor": "2026-08-01T16:40:48.226Z",
-    "niceHashOrderBook": "2026-08-01T16:43:39.764144566Z",
-    "coinGecko": "2026-08-01T16:43:40.917113+00:00",
+    "mempoolSpace": "2026-08-01T17:47:57.856540+00:00",
+    "bip110Monitor": "2026-08-01T17:41:50.767Z",
+    "niceHashOrderBook": "2026-08-01T17:47:59.468169920Z",
+    "coinGecko": "2026-08-01T17:47:59.151683+00:00",
     "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
-  "pipelineCommitSha": "31f50b624168b49b795dcbc2bc36c992bdf87d03",
+  "pipelineCommitSha": "943eee268baa92f1660c181000741f3571be741f",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -28,15 +28,15 @@
   "units": "sats/EH/day",
   "available": true,
   "currentSpot": {
-    "timestamp": "2026-08-01T16:43:39.764144566Z",
+    "timestamp": "2026-08-01T17:47:59.468169920Z",
     "algorithm": "SHA256AsicBoost",
     "currency": "BTC",
     "unit": "BTC/EH/day",
-    "lowSatsPerEhDay": 49760000,
-    "baseSatsPerEhDay": 50750000,
-    "highSatsPerEhDay": 50750000,
-    "totalSpeedEhS": 13.39298182,
-    "activePaidOrderCount": 536,
+    "lowSatsPerEhDay": 49590000,
+    "baseSatsPerEhDay": 50720000,
+    "highSatsPerEhDay": 50720000,
+    "totalSpeedEhS": 13.82838108,
+    "activePaidOrderCount": 546,
     "quantiles": "payingSpeed-weighted P25 / P50 / P75",
     "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
   },
@@ -94,15 +94,15 @@
       "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
     },
     {
-      "timestamp": "2026-08-01T16:43:39.764144566Z",
+      "timestamp": "2026-08-01T17:47:59.468169920Z",
       "algorithm": "SHA256AsicBoost",
       "currency": "BTC",
       "unit": "BTC/EH/day",
-      "lowSatsPerEhDay": 49760000,
-      "baseSatsPerEhDay": 50750000,
-      "highSatsPerEhDay": 50750000,
-      "totalSpeedEhS": 13.39298182,
-      "activePaidOrderCount": 536,
+      "lowSatsPerEhDay": 49590000,
+      "baseSatsPerEhDay": 50720000,
+      "highSatsPerEhDay": 50720000,
+      "totalSpeedEhS": 13.82838108,
+      "activePaidOrderCount": 546,
       "quantiles": "payingSpeed-weighted P25 / P50 / P75",
       "source": "https://api2.nicehash.com/main/api/v2/hashpower/orderBook?algorithm=SHA256AsicBoost&size=100&page=0"
     }
