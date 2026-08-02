@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-02T16:42:41.143219+00:00",
-  "chainTip": 960748,
+  "generatedAt": "2026-08-02T17:49:10.559508+00:00",
+  "chainTip": 960753,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-02T16:42:39.896268+00:00",
-    "bip110Monitor": "2026-08-02T15:58:48.382Z",
-    "niceHashOrderBook": "2026-08-02T16:42:42.140187535Z",
-    "coinGecko": "2026-08-02T16:42:41.143219+00:00",
+    "mempoolSpace": "2026-08-02T17:49:09.331288+00:00",
+    "bip110Monitor": "2026-08-02T17:45:47.101Z",
+    "niceHashOrderBook": "2026-08-02T17:49:09.854318867Z",
+    "coinGecko": "2026-08-02T17:49:10.559508+00:00",
     "f2PoolWindow": "2026-07-27T00:00:00+00:00"
   },
-  "pipelineCommitSha": "70e6e8b3df8e391da5b070d67edde17bfb9a8094",
+  "pipelineCommitSha": "d24ff37307149ca9b58801f0e8291a20a5302ec8",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -64,50 +64,50 @@
     "enabled": true
   },
   "summary": {
-    "blocksSinceStarted": 33389,
+    "blocksSinceStarted": 33394,
     "signalingBlocks": 114,
-    "lifetimeSignalingPct": 0.34142981221360325,
-    "oneSignalPerNBlocks": 292.8859649122807,
-    "currentPeriodSignalingPct": 2.64783759929391,
+    "lifetimeSignalingPct": 0.34137869078277533,
+    "oneSignalPerNBlocks": 292.9298245614035,
+    "currentPeriodSignalingPct": 2.6362038664323375,
     "currentPeriodSignalCount": 30,
-    "currentPeriodBlockCount": 1133,
+    "currentPeriodBlockCount": 1138,
     "distanceFromThresholdBlocks": 1079,
     "currentNetworkEhS": 903.6003246886916,
-    "impliedSignalingEhS": 23.925869144449024,
-    "signalEhDays": 753.4628084506398,
+    "impliedSignalingEhS": 23.82074669653844,
+    "signalEhDays": 754.0644651009841,
     "observedMiningRevenueSats": 35843156056,
     "observedTransactionFeesSats": 218156056
   },
   "currentPrice": {
-    "usd": 63141,
-    "timestamp": "2026-08-02T16:42:41.143219+00:00",
+    "usd": 63275,
+    "timestamp": "2026-08-02T17:49:10.559508+00:00",
     "label": "Current value of historical BTC amount"
   },
   "battleClock": {
-    "currentHeight": 960748,
+    "currentHeight": 960753,
     "mandatoryStartHeight": 961632,
     "mandatoryEndHeight": 963647,
     "maximumLockInHeight": 963648,
     "maximumActivationHeight": 965664,
-    "blocksRemaining": 884,
-    "rollingBlockIntervalSeconds": 548.6433566433567,
+    "blocksRemaining": 879,
+    "rollingBlockIntervalSeconds": 567.8181818181819,
     "rollingWindowBlocks": 144,
-    "estimatedSecondsRemaining": 485001,
+    "estimatedSecondsRemaining": 499112,
     "etaConfidence": "MEDIUM",
     "stage": "VOLUNTARY_SIGNALING"
   },
   "simpleView": {
-    "fightCostSoFarUsd": 24599703.440701347,
-    "currentArmyCostPerDayUsd": 729307.1758074947,
-    "matchF2PoolCostPerDayUsd": 3815631.8128374834,
+    "fightCostSoFarUsd": 24651909.77669625,
+    "currentArmyCostPerDayUsd": 731565.8849400331,
+    "matchF2PoolCostPerDayUsd": 3823018.529410563,
     "kratterCommittedUsd": 7982.587511295791,
     "kratterMaximumLossUsd": 638.6070009036632,
     "psuAnnualPriceUsd": 790.0,
-    "secondsUntilMandatory": 485001,
-    "bip110SevenDayEhS": 22.831495084456733,
+    "secondsUntilMandatory": 499112,
+    "bip110SevenDayEhS": 22.853704710025273,
     "f2poolSevenDayEhS": 142.28264251412457,
-    "reinforcementsNeededEhS": 119.45114742966784,
-    "f2poolMatchedPct": 16.046577910717552,
+    "reinforcementsNeededEhS": 119.4289378040993,
+    "f2poolMatchedPct": 16.062187422303854,
     "fredCommitmentOptionsUsd": [
       50000,
       500000,
@@ -140,13 +140,13 @@
     }
   },
   "hashpriceReference": {
-    "btcPerPhDay": 0.0005479597149976597,
-    "usdPerPhDay": 34.598724364667234,
+    "btcPerPhDay": 0.0005294554964390304,
+    "usdPerPhDay": 33.50129653717965,
     "averageBlockRewardSats": 314413649.61403507,
     "rewardSampleBlocks": 114,
     "networkEhS": 903.6003246886916,
-    "blockIntervalSeconds": 548.6433566433567,
-    "timestamp": "2026-08-02T16:42:41.143219+00:00",
+    "blockIntervalSeconds": 567.8181818181819,
+    "timestamp": "2026-08-02T17:49:10.559508+00:00",
     "confidence": "MEDIUM",
     "note": "Current theoretical miner revenue floor derived from up to the latest 144 observed BIP-110 signaling-block rewards, seven-day network hash rate and the rolling 144-block interval. It is not a rental quote."
   },
@@ -222,17 +222,17 @@
   "bossBattle": {
     "label": "SATIRICAL BOSS BATTLE",
     "comparisonWindow": "7d",
-    "windowStart": "2026-07-26T16:25:03+00:00",
-    "windowEnd": "2026-08-02T16:25:03+00:00",
-    "bip110WindowEhS": 22.831495084456733,
+    "windowStart": "2026-07-26T17:50:36+00:00",
+    "windowEnd": "2026-08-02T17:50:36+00:00",
+    "bip110WindowEhS": 22.853704710025273,
     "bip110SignalBlocks": 26,
-    "bip110ObservedBlocks": 1029,
+    "bip110ObservedBlocks": 1028,
     "f2poolWindowEhS": 142.28264251412457,
     "f2poolSharePct": 16.305500000000002,
-    "reinforcementsRequiredEhS": 119.45114742966784,
-    "progressPct": 16.046577910717552,
+    "reinforcementsRequiredEhS": 119.4289378040993,
+    "progressPct": 16.062187422303854,
     "sourceTimestamps": {
-      "bip110": "2026-08-02T16:25:03+00:00",
+      "bip110": "2026-08-02T17:50:36+00:00",
       "f2pool": "2026-07-27T00:00:00+00:00"
     },
     "sources": {
@@ -245,12 +245,12 @@
       "date": "2026-02-19"
     },
     "costScenarios": {
-      "hashpriceFloorBtcPerPhDay": 0.0005479597149976597,
-      "hashpriceFloorUsdPerPhDay": 34.598724364667234,
+      "hashpriceFloorBtcPerPhDay": 0.0005294554964390304,
+      "hashpriceFloorUsdPerPhDay": 33.50129653717965,
       "kratterLossRate": 0.08,
       "marketRentalQuoteAvailable": true,
       "marketBaseBtcPerEhDay": 0.5059,
-      "nicehashVisibleSpeedEhS": 11.17098559,
+      "nicehashVisibleSpeedEhS": 11.24018998,
       "marketDepthVerified": false,
       "marketDepthSufficientByVisibleSpeed": false
     }
@@ -258,19 +258,19 @@
   "marketEstimate": {
     "label": "MARKET ESTIMATE",
     "available": true,
-    "lowSats": 37409428440,
-    "baseSats": 38117683480,
-    "highSats": 38117683480,
-    "lowSatsPerEhDay": 49650000,
+    "lowSats": 37703223255,
+    "baseSats": 38148121289,
+    "highSats": 38148121289,
+    "lowSatsPerEhDay": 50000000,
     "baseSatsPerEhDay": 50590000,
     "highSatsPerEhDay": 50590000,
     "coveragePct": 100,
     "confidence": "MEDIUM",
     "source": "NiceHash public SHA256AsicBoost order book",
     "algorithm": "SHA256AsicBoost",
-    "asOf": "2026-08-02T16:42:42.140187535Z",
-    "totalSpeedEhS": 11.17098559,
-    "activePaidOrderCount": 717,
+    "asOf": "2026-08-02T17:49:09.854318867Z",
+    "totalSpeedEhS": 11.24018998,
+    "activePaidOrderCount": 769,
     "snapshotCount": 5,
     "reason": "Current NiceHash SHA256AsicBoost paying-speed-weighted spot quote applied to the observed signal EH-day footprint as a replacement-cost benchmark. It is not claimed as the historical invoice."
   },
@@ -283,9 +283,9 @@
       "modeledLossSats": 3116796179
     },
     "marketRentalModel": {
-      "estimatedRentalCostSats": 38117683480,
-      "modeledLossSats": 3049414678,
-      "modeledPostMiningValueSats": 35068268802
+      "estimatedRentalCostSats": 38148121289,
+      "modeledLossSats": 3051849703,
+      "modeledPostMiningValueSats": 35096271586
     }
   },
   "periods": [
@@ -500,14 +500,14 @@
     {
       "periodNum": 476,
       "startBlock": 959616,
-      "endBlock": 960748,
-      "totalBlocks": 1133,
+      "endBlock": 960753,
+      "totalBlocks": 1138,
       "signalingCount": 30,
-      "signalingPct": 2.64783759929391,
+      "signalingPct": 2.6362038664323375,
       "networkEhS": 903.6003246886916,
-      "impliedSignalingEhS": 23.925869144449024,
-      "signalEhDays": 185.1588121196408,
-      "cumulativeSignalEhDays": 753.4628084506398,
+      "impliedSignalingEhS": 23.82074669653844,
+      "signalEhDays": 185.76046876998504,
+      "cumulativeSignalEhDays": 754.0644651009841,
       "partial": true
     }
   ],
@@ -516,16 +516,16 @@
     "agrees": true,
     "data": {
       "bip": "110",
-      "tip": 960747,
-      "chainTip": 960747,
+      "tip": 960753,
+      "chainTip": 960753,
       "periodNum": 476,
       "periodStart": 959616,
       "periodEnd": 961631,
-      "totalBlocks": 1132,
+      "totalBlocks": 1138,
       "signalingCount": 30,
-      "pct": 2.65,
+      "pct": 2.64,
       "synced": true,
-      "updatedAt": "2026-08-02T15:58:48.382Z",
+      "updatedAt": "2026-08-02T17:45:47.101Z",
       "periods": [
         {
           "periodNum": 465,
