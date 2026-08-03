@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-02T23:25:18.829990+00:00",
-  "chainTip": 960788,
+  "generatedAt": "2026-08-03T01:01:14.156747+00:00",
+  "chainTip": 960795,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-02T23:25:17.565018+00:00",
-    "bip110Monitor": "2026-08-02T23:21:51.293Z",
-    "niceHashOrderBook": "2026-08-02T23:25:16.006335314Z",
-    "coinGecko": "2026-08-02T23:25:18.829990+00:00",
-    "f2PoolWindow": "2026-07-27T00:00:00+00:00"
+    "mempoolSpace": "2026-08-03T01:01:12.887153+00:00",
+    "bip110Monitor": "2026-08-03T00:55:48.010Z",
+    "niceHashOrderBook": "2026-08-03T01:01:14.082156470Z",
+    "coinGecko": "2026-08-03T01:01:14.156747+00:00",
+    "f2PoolWindow": "2026-08-03T00:00:00+00:00"
   },
-  "pipelineCommitSha": "5611b625f529d35a580554fdafe45a332f71385d",
+  "pipelineCommitSha": "6d10611b5b626fe1d08f27f6c2aa173c2cafa64b",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -28,10 +28,10 @@
   "auditedSignalingBlocks": 116,
   "totalSignalingBlocks": 116,
   "grossRejectedFeesSats": null,
-  "templateFeeGapSats": 41523096,
+  "templateFeeGapSats": 41525805,
   "estimatedNetFilterCostSats": null,
-  "unknownFeeMassSats": 41523096,
-  "averageMatchRatePct": 79.00931034482758,
+  "unknownFeeMassSats": 41525805,
+  "averageMatchRatePct": 79.00017241379311,
   "classificationCoveragePct": 0,
   "ruleBreakdown": [],
   "records": [],
