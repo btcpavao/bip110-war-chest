@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-04T07:28:38.582643+00:00",
-  "chainTip": 960978,
+  "generatedAt": "2026-08-04T10:08:00.484897+00:00",
+  "chainTip": 960996,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-04T07:28:37.357103+00:00",
-    "bip110Monitor": "2026-08-04T04:17:00.563Z",
-    "niceHashOrderBook": "2026-08-04T07:28:39.528684857Z",
-    "coinGecko": "2026-08-04T07:28:38.582643+00:00",
+    "mempoolSpace": "2026-08-04T10:07:59.212842+00:00",
+    "bip110Monitor": "2026-08-04T09:26:39.139Z",
+    "niceHashOrderBook": "2026-08-04T10:07:58.462870466Z",
+    "coinGecko": "2026-08-04T10:08:00.484897+00:00",
     "f2PoolWindow": "2026-08-03T00:00:00+00:00"
   },
-  "pipelineCommitSha": "7d7261011a1c1854afde398377614c3d18ac5dd2",
+  "pipelineCommitSha": "659c7eccecc4da08a2aaeef3b688eb5fb1523b77",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Internal current-period signaling count disagrees with bip110monitor.com.",
@@ -26,7 +26,7 @@
     "bossBattlePct": 100
   },
   "status": "PARTIAL",
-  "internalSignalCount": 120,
-  "monitorSignalCount": 35,
+  "internalSignalCount": 121,
+  "monitorSignalCount": 36,
   "monitorAgrees": false
 }
