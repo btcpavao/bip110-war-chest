@@ -1651,7 +1651,7 @@ th button, .block-link { cursor: pointer; border: 0; background: none; font: 600
   .countdown-value { font-size: clamp(48px, 16vw, 72px); }
   .risk-comparison { grid-template-columns: 1fr; }
 
-  .mission-panel { padding-right: 12px; padding-left: 12px; }
+  .mission-panel { padding-right: 16px; padding-left: 16px; }
   .mission-stage { grid-template-columns: 70px minmax(0, 1fr) 82px; align-items: start; gap: 8px; }
   .mission-heading strong { font-size: clamp(46px, 15vw, 72px); }
   .mission-fighter figcaption { font-size: 6px; }
