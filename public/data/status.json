@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-07T13:44:44.760710+00:00",
-  "chainTip": 961439,
+  "generatedAt": "2026-08-07T14:43:37.452057+00:00",
+  "chainTip": 961446,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-07T13:44:43.494140+00:00",
-    "bip110Monitor": "2026-08-07T13:35:49.983Z",
-    "niceHashOrderBook": "2026-08-07T13:44:45.496818093Z",
-    "coinGecko": "2026-08-07T13:44:44.760710+00:00",
+    "mempoolSpace": "2026-08-07T14:43:36.159422+00:00",
+    "bip110Monitor": "2026-08-07T14:41:49.966Z",
+    "niceHashOrderBook": "2026-08-07T14:43:18.805984339Z",
+    "coinGecko": "2026-08-07T14:43:37.452057+00:00",
     "f2PoolWindow": "2026-08-03T00:00:00+00:00"
   },
-  "pipelineCommitSha": "23f117ca272cf8577c101cbd174cb67eaa623dac",
+  "pipelineCommitSha": "137ee5cde67245906fae2764bdd41f2f5e871f06",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
@@ -25,7 +25,7 @@
     "bossBattlePct": 100
   },
   "status": "PARTIAL",
-  "internalSignalCount": 131,
-  "monitorSignalCount": 47,
+  "internalSignalCount": 132,
+  "monitorSignalCount": 48,
   "monitorAgrees": true
 }
