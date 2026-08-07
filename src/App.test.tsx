@@ -202,12 +202,12 @@ describe('scroll-story landing page', () => {
   it('shows a useful editorial fallback when the ministerial portrait is missing', () => {
     const { container } = render(<FabiansPage data={appData()} />)
     const view = within(container)
-    const image = view.getByRole('img', { name: /Dr\. Pleb Kruse wearing red mitochondrial combat goggles/i })
+    const image = view.getByRole('img', { name: /Dr\. Pleb Kruse wearing a red Make America Healthy Again cap/i })
 
     fireEvent.error(image)
 
     expect(view.getByRole('img', {
-      name: /Dr\. Pleb Kruse wearing red mitochondrial combat goggles.*Image unavailable/i,
+      name: /Dr\. Pleb Kruse wearing a red Make America Healthy Again cap.*Image unavailable/i,
     })).toBeInTheDocument()
     expect(view.getByText('DR. PLEB KRUSE // MINISTERIAL PORTRAIT PENDING')).toBeInTheDocument()
   })

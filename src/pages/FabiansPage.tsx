@@ -100,12 +100,12 @@ export function FabiansPage({ data }: { data: AppData }) {
           <div className="fabians-hero__visual">
             <EditorialIllustration
               src={assetUrl('assets/caricatures/dr-pleb-kruse-fabians.webp')}
-              alt="Satirical illustration of Dr. Pleb Kruse wearing red mitochondrial combat goggles while presenting donuts and a diagram claiming that a long-range Landauer attack could eventually turn Bitcoin into Ethereum."
-              width={1200}
-              height={1000}
+              alt="Dr. Pleb Kruse wearing a red Make America Healthy Again cap and tinted glasses while eating a chocolate donut beside an open box of donuts."
+              width={1600}
+              height={1250}
               priority
               fallbackLabel="DR. PLEB KRUSE // MINISTERIAL PORTRAIT PENDING"
-              caption="The minister is currently conducting an independent longitudinal study into whether red lenses can offset twelve glazed donuts."
+              caption="The minister is currently conducting an independent longitudinal study into whether red lenses and a red cap can offset twelve glazed donuts."
             />
             <span className="fabians-specimen fabians-specimen--one">PROOF OF SNACK</span>
             <span className="fabians-specimen fabians-specimen--two">MITOCHONDRIAL HASH RATE: UNVERIFIED</span>
