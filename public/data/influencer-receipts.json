@@ -2,16 +2,16 @@
   "schemaVersion": "1.0.0",
   "methodologyVersion": "2026-07-30.5",
   "rulesetVersion": "bip9-bit4-v1",
-  "generatedAt": "2026-08-07T23:54:04.189073+00:00",
-  "chainTip": 961507,
+  "generatedAt": "2026-08-08T00:38:40.036228+00:00",
+  "chainTip": 961512,
   "sourceFreshness": {
-    "mempoolSpace": "2026-08-07T23:54:02.910246+00:00",
-    "bip110Monitor": "2026-08-07T23:40:49.960Z",
-    "niceHashOrderBook": "2026-08-07T23:54:02.756841901Z",
-    "coinGecko": "2026-08-07T23:54:04.189073+00:00",
+    "mempoolSpace": "2026-08-08T00:38:38.761094+00:00",
+    "bip110Monitor": "2026-08-08T00:36:50.534Z",
+    "niceHashOrderBook": "2026-08-08T00:38:39.135015292Z",
+    "coinGecko": "2026-08-08T00:38:40.036228+00:00",
     "f2PoolWindow": "2026-08-03T00:00:00+00:00"
   },
-  "pipelineCommitSha": "1c93af6b550d3f1c64c991e5c8a410da06a633ce",
+  "pipelineCommitSha": "4f8fc9ff97985028dc6931d468e4e237397ae201",
   "warnings": [
     "NiceHash is a current spot replacement-cost benchmark. Applying its quote to historical signal EH-days is not evidence of a historical rental invoice.",
     "Spam-Rug Tax transaction classification is not claimed until missing transactions can be evaluated against the pinned ruleset."
